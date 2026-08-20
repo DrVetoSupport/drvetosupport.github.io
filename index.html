@@ -539,6 +539,19 @@
     flex-direction: column;
     break-inside: avoid;
   }
+  .price-card.is-match {
+    border-color: var(--good);
+    box-shadow: 0 0 0 2px color-mix(in srgb, var(--good) 35%, transparent), var(--shadow);
+  }
+  .price-match {
+    font-size: 11px;
+    font-weight: 600;
+    text-align: center;
+    padding: 0 8px 12px;
+    min-height: 13px;
+  }
+  .price-match.match-ok { color: var(--good); }
+  .price-match.match-no { color: var(--bad); }
   .price-head {
     background: var(--ink);
     color: var(--bg);
@@ -821,10 +834,10 @@
     <div class="pricing-head">
       <span class="eyebrow">Abbonamento mensile</span>
       <h2>Tariffe dr.veto</h2>
-      <p>Il canone dipende dal numero di utenti che accedono al gestionale, non dal numero di PC.</p>
+      <p>Il canone dipende dal numero di utenti che accedono al gestionale, non dal numero di PC. Da 3 utenti in su le postazioni sono illimitate su tutti i piani.</p>
     </div>
     <div class="pricing-grid">
-      <div class="price-card">
+      <div class="price-card" id="priceCard-1">
         <div class="price-head">
           <div class="price-tier">1 utente</div>
           <div class="price-sub">1 postazione</div>
@@ -834,8 +847,9 @@
           <div>Installazione €300</div>
           <div>Recupero dati €100</div>
         </div>
+        <div class="price-match" id="priceMatch-1"></div>
       </div>
-      <div class="price-card">
+      <div class="price-card" id="priceCard-3">
         <div class="price-head">
           <div class="price-tier">Fino a 3 utenti</div>
           <div class="price-sub">Postazioni illimitate</div>
@@ -845,8 +859,9 @@
           <div>Installazione €300</div>
           <div>Recupero dati €100</div>
         </div>
+        <div class="price-match" id="priceMatch-3"></div>
       </div>
-      <div class="price-card">
+      <div class="price-card" id="priceCard-5">
         <div class="price-head">
           <div class="price-tier">Fino a 5 utenti</div>
           <div class="price-sub">Postazioni illimitate</div>
@@ -856,8 +871,9 @@
           <div>Installazione €300</div>
           <div>Recupero dati €100</div>
         </div>
+        <div class="price-match" id="priceMatch-5"></div>
       </div>
-      <div class="price-card">
+      <div class="price-card" id="priceCard-15">
         <div class="price-head">
           <div class="price-tier">Da 6 a 15 utenti</div>
           <div class="price-sub">Postazioni illimitate</div>
@@ -867,8 +883,9 @@
           <div>Installazione €300</div>
           <div>Recupero dati €100</div>
         </div>
+        <div class="price-match" id="priceMatch-15"></div>
       </div>
-      <div class="price-card">
+      <div class="price-card" id="priceCard-15plus">
         <div class="price-head">
           <div class="price-tier">Oltre 15 utenti</div>
           <div class="price-sub">Postazioni illimitate</div>
@@ -878,6 +895,7 @@
           <div>Installazione €300</div>
           <div>Recupero dati €100</div>
         </div>
+        <div class="price-match" id="priceMatch-15plus"></div>
       </div>
     </div>
     <p class="pricing-note">I prezzi sopra indicati sono da intendersi IVA esclusa e riservati ai Soci Alcyon.</p>
@@ -1078,6 +1096,35 @@
     multiNoticeEl.hidden = !state.multi;
     macCardEl.hidden = !state.mac;
     updateWaLink();
+    updatePricingMatch();
+  }
+
+  function updatePricingMatch() {
+    const oneUserCard = document.getElementById('priceCard-1');
+    if (!oneUserCard) return; // pricing section not present
+    const oneUserMatch = document.getElementById('priceMatch-1');
+    const multiUserIds = ['priceCard-3', 'priceCard-5', 'priceCard-15', 'priceCard-15plus'];
+
+    if (state.count === 1) {
+      oneUserCard.classList.add('is-match');
+      oneUserMatch.textContent = '✓ Adatto alla tua configurazione';
+      oneUserMatch.className = 'price-match match-ok';
+      multiUserIds.forEach(id => {
+        document.getElementById(id).classList.remove('is-match');
+        document.getElementById(id.replace('priceCard', 'priceMatch')).textContent = '';
+        document.getElementById(id.replace('priceCard', 'priceMatch')).className = 'price-match';
+      });
+    } else {
+      oneUserCard.classList.remove('is-match');
+      oneUserMatch.textContent = `Non sufficiente per ${state.count} postazioni`;
+      oneUserMatch.className = 'price-match match-no';
+      multiUserIds.forEach(id => {
+        document.getElementById(id).classList.remove('is-match');
+        const m = document.getElementById(id.replace('priceCard', 'priceMatch'));
+        m.textContent = 'Postazioni illimitate incluse';
+        m.className = 'price-match match-ok';
+      });
+    }
   }
 
   document.getElementById('minusBtn').addEventListener('click', () => {
