@@ -537,21 +537,40 @@
     font-size: 0.9em;
   }
 
+  @page { margin: 10mm; }
   @media print {
     .tabs, .panel, .print-btn, details.compat, .cpu-check-card, .cta-bar, .lede {
       display: none !important;
     }
-    body { background: #fff; color: #000; }
-    .wrap { max-width: 100%; padding: 12px 6px; }
-    .layout { grid-template-columns: 1fr !important; gap: 12px; }
-    .cards { gap: 12px; }
+    body { background: #fff; color: #000; font-size: 12px; }
+    .wrap { max-width: 100%; padding: 0; }
+    header.top { margin-bottom: 12px; gap: 2px; }
+    .eyebrow { font-size: 10.5px; }
+    h1 { font-size: 20px; }
+    .layout { grid-template-columns: 1fr !important; gap: 8px; }
+    .results { gap: 8px; }
+    .product-box { margin-bottom: 0; padding: 8px 12px; font-size: 11.5px; }
+    .summary-bar { padding: 8px 12px; }
+    .cards { gap: 8px; }
+    .card {
+      padding: 12px;
+      gap: 8px;
+    }
+    .card-title { font-size: 14.5px; }
+    .spec-list { gap: 5px; }
+    .spec-row { grid-template-columns: 66px 1fr; gap: 8px; }
+    .spec-key { font-size: 10px; }
+    .spec-val { font-size: 11px; padding: 3px 7px; }
+    .card-note { font-size: 10px; padding-top: 6px; }
+    .notice { padding: 8px 12px; font-size: 11px; }
     .card, .summary-bar, .notice, .contact-card, .product-box {
       box-shadow: none !important;
       border: 1px solid #ccc !important;
       break-inside: avoid;
     }
     a { color: #000; text-decoration: none; }
-    footer.fine-print { margin-top: 16px; }
+    footer.fine-print { margin-top: 10px; font-size: 9.5px; }
+    footer.fine-print .company { padding-top: 6px; margin-top: 6px; }
   }
 
   footer.fine-print {
@@ -627,6 +646,28 @@
         <button type="button" class="print-btn" onclick="window.print()">🖨️ Stampa / Esporta PDF</button>
       </div>
 
+      <div class="card cpu-check-card">
+        <div class="card-head">
+          <h3 class="card-title">Verifica se un PC che hai già è compatibile</h3>
+        </div>
+        <div class="cpu-checker">
+          <div class="segmented small" role="group" aria-label="Tipo di postazione">
+            <button type="button" class="cpuOsBtn" id="cpuOsWin" aria-pressed="true">PC Windows</button>
+            <button type="button" class="cpuOsBtn" id="cpuOsMac" aria-pressed="false">Mac</button>
+          </div>
+          <input type="text" id="cpuInput" class="cpu-input" placeholder="Scrivi il modello della CPU — es. Intel Core i5-8500, Ryzen 5 3600, Apple M1…" autocomplete="off">
+          <div id="cpuResult" class="cpu-result" hidden></div>
+          <button type="button" id="howToFindBtn" class="link-btn">Non sai qual è la CPU del tuo PC? Scopri come trovarla</button>
+          <div class="notice" id="howToFindBox" hidden>
+            <span>💡</span>
+            <span>
+              <strong>Windows:</strong> premi <code>Ctrl+Shift+Esc</code> per aprire Gestione attività, vai sulla scheda "Prestazioni" e clicca su "CPU": il nome completo del processore compare in alto a destra. In alternativa: Impostazioni → Sistema → Informazioni su.<br><br>
+              <strong>Mac:</strong> clicca sul logo Apple in alto a sinistra → "Informazioni su questo Mac": il modello del chip o del processore è indicato nella prima schermata.
+            </span>
+          </div>
+        </div>
+      </div>
+
       <div class="cards" id="cardsGrid">
         <div class="card">
           <div class="card-head">
@@ -665,28 +706,6 @@
           <div class="spec-row"><span class="spec-key">VM Windows</span><span class="spec-val">Parallels Desktop (licenza a pagamento) oppure VMware Fusion (gratuito) per eseguire una macchina virtuale Windows</span></div>
         </div>
         <p class="card-note">Su Mac, Dr.Veto va installato all'interno di una macchina virtuale Windows: sia i modelli Intel sia quelli con chip Apple Silicon (M1 e successivi) sono supportati. I MacBook Air vanno comunque validati dall'assistenza prima dell'acquisto.</p>
-      </div>
-
-      <div class="card cpu-check-card">
-        <div class="card-head">
-          <h3 class="card-title">Hai già dei PC? Verifica se sono compatibili</h3>
-        </div>
-        <div class="cpu-checker">
-          <div class="segmented small" role="group" aria-label="Tipo di postazione">
-            <button type="button" class="cpuOsBtn" id="cpuOsWin" aria-pressed="true">PC Windows</button>
-            <button type="button" class="cpuOsBtn" id="cpuOsMac" aria-pressed="false">Mac</button>
-          </div>
-          <input type="text" id="cpuInput" class="cpu-input" placeholder="Scrivi il modello della CPU — es. Intel Core i5-8500, Ryzen 5 3600, Apple M1…" autocomplete="off">
-          <div id="cpuResult" class="cpu-result" hidden></div>
-          <button type="button" id="howToFindBtn" class="link-btn">Non sai qual è la CPU del tuo PC? Scopri come trovarla</button>
-          <div class="notice" id="howToFindBox" hidden>
-            <span>💡</span>
-            <span>
-              <strong>Windows:</strong> premi <code>Ctrl+Shift+Esc</code> per aprire Gestione attività, vai sulla scheda "Prestazioni" e clicca su "CPU": il nome completo del processore compare in alto a destra. In alternativa: Impostazioni → Sistema → Informazioni su.<br><br>
-              <strong>Mac:</strong> clicca sul logo Apple in alto a sinistra → "Informazioni su questo Mac": il modello del chip o del processore è indicato nella prima schermata.
-            </span>
-          </div>
-        </div>
       </div>
 
       <details class="compat">
