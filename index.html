@@ -338,6 +338,9 @@
     margin: 0;
   }
   .card-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
     font-family: var(--font-mono);
     font-size: 11px;
     text-transform: uppercase;
@@ -347,6 +350,7 @@
     padding: 3px 8px;
     border-radius: 6px;
   }
+  .card-tag svg { flex-shrink: 0; }
 
   .spec-list { display: flex; flex-direction: column; gap: 12px; }
   .spec-row { display: grid; grid-template-columns: 84px 1fr; gap: 12px; align-items: baseline; }
@@ -466,6 +470,13 @@
     color: var(--ink-soft);
     max-width: 72ch;
   }
+  footer.fine-print p { margin: 0 0 6px; }
+  footer.fine-print p:last-child { margin-bottom: 0; }
+  footer.fine-print .company {
+    padding-top: 10px;
+    margin-top: 10px;
+    border-top: 1px solid var(--line);
+  }
 </style>
 
 <div class="wrap">
@@ -529,7 +540,7 @@
         <div class="card">
           <div class="card-head">
             <h3 class="card-title">Postazione client</h3>
-            <span class="card-tag">Windows</span>
+            <span class="card-tag"><svg viewBox="0 0 24 24" width="11" height="11" fill="currentColor" aria-hidden="true"><rect x="2" y="2" width="9" height="9"/><rect x="13" y="2" width="9" height="9"/><rect x="2" y="13" width="9" height="9"/><rect x="13" y="13" width="9" height="9"/></svg>Windows</span>
           </div>
           <div class="spec-list">
             <div class="spec-row"><span class="spec-key">CPU</span><span class="spec-val">Intel Core i3-14100 o superiore (o Intel Core Ultra 5 serie 200) — oppure AMD Ryzen 5 5600 o superiore</span></div>
@@ -546,13 +557,13 @@
 
       <div class="notice" id="multiNotice" hidden>
         <span>🌐</span>
-        <span><strong>Multi-sede:</strong> ogni sede ha bisogno del proprio server con la configurazione indicata. Per il collegamento tra sedi serve una connessione ADSL o Fibra da almeno 20 Mb/s in download e 10 Mb/s in upload (il 4G non è compatibile).</span>
+        <span><strong>Multi-sede:</strong> ogni sede ha bisogno del proprio server con la configurazione indicata. Per il collegamento tra sedi serve una connessione in Fibra FTTC / FTTH da almeno 20 Mb/s in download e 10 Mb/s in upload (4G e 5G non compatibili).</span>
       </div>
 
       <div class="card" id="macCard" hidden>
         <div class="card-head">
           <h3 class="card-title">Postazione client</h3>
-          <span class="card-tag">Mac</span>
+          <span class="card-tag"><svg viewBox="0 0 24 24" width="11" height="11" fill="currentColor" aria-hidden="true"><path d="M15.8 3c.1 1-.3 2-1 2.8-.7.8-1.7 1.3-2.7 1.2-.1-1 .3-2.1 1-2.8C13.8 3.4 14.8 3 15.8 3z"/><path d="M18.9 16.8c-.5 1.1-1 2.1-1.7 3-1 1.3-2 2.6-3.5 2.6-1.4 0-1.9-.9-3.5-.9-1.6 0-2.1.9-3.5.9-1.4 0-2.5-1.4-3.5-2.7C1.3 17.4.6 13.9 1.8 11.5c.8-1.6 2.3-2.6 3.9-2.6 1.4 0 2.3.9 3.5.9 1.1 0 1.9-.9 3.5-.9 1.4 0 2.9.7 3.9 2-3.4 1.9-2.8 6.3 2.3 5.9z"/></svg>Mac</span>
         </div>
         <div class="spec-list">
           <div class="spec-row"><span class="spec-key">CPU</span><span class="spec-val">Mac Intel: Core i5 (>3ª gen.) o i7 — oppure Mac Apple Silicon: chip M1 o successivi</span></div>
@@ -581,7 +592,7 @@
                   <tr><td class="model">Core i3</td><td><span class="status ok">✓ se successivo a i3-9100 (9ª gen.)</span></td></tr>
                   <tr><td class="model">Core i5</td><td><span class="status ok">✓ se successivo a i5-9100 (9ª gen.)</span></td></tr>
                   <tr><td class="model">Core i7, Core i9</td><td><span class="status ok">✓ Compatibile</span></td></tr>
-                  <tr><td class="model">Pentium</td><td><span class="status no">✗ generazioni vecchie</span> · <span class="status ask">✉ contattaci per le nuove</span></td></tr>
+                  <tr><td class="model">Pentium</td><td><span class="status no">✗ Non compatibile</span></td></tr>
                   <tr><td class="model">Altri modelli Intel</td><td><span class="status ask">✉ Contattaci</span></td></tr>
                 </tbody>
               </table>
@@ -636,7 +647,7 @@
       <div class="card">
         <div class="card-head">
           <h3 class="card-title">PC dedicato</h3>
-          <span class="card-tag">Windows</span>
+          <span class="card-tag"><svg viewBox="0 0 24 24" width="11" height="11" fill="currentColor" aria-hidden="true"><rect x="2" y="2" width="9" height="9"/><rect x="13" y="2" width="9" height="9"/><rect x="2" y="13" width="9" height="9"/><rect x="13" y="13" width="9" height="9"/></svg>Windows</span>
         </div>
         <div class="spec-list">
           <div class="spec-row"><span class="spec-key">CPU</span><span class="spec-val">Intel Core i5-14100 o superiore (o Intel Core Ultra 5 serie 200) — oppure AMD Ryzen 5 5600 o superiore</span></div>
@@ -652,7 +663,7 @@
       <div class="card">
         <div class="card-head">
           <h3 class="card-title">PC dedicato</h3>
-          <span class="card-tag">Mac</span>
+          <span class="card-tag"><svg viewBox="0 0 24 24" width="11" height="11" fill="currentColor" aria-hidden="true"><path d="M15.8 3c.1 1-.3 2-1 2.8-.7.8-1.7 1.3-2.7 1.2-.1-1 .3-2.1 1-2.8C13.8 3.4 14.8 3 15.8 3z"/><path d="M18.9 16.8c-.5 1.1-1 2.1-1.7 3-1 1.3-2 2.6-3.5 2.6-1.4 0-1.9-.9-3.5-.9-1.6 0-2.1.9-3.5.9-1.4 0-2.5-1.4-3.5-2.7C1.3 17.4.6 13.9 1.8 11.5c.8-1.6 2.3-2.6 3.9-2.6 1.4 0 2.3.9 3.5.9 1.1 0 1.9-.9 3.5-.9 1.4 0 2.9.7 3.9 2-3.4 1.9-2.8 6.3 2.3 5.9z"/></svg>Mac</span>
         </div>
         <div class="spec-list">
           <div class="spec-row"><span class="spec-key">CPU</span><span class="spec-val">Mac Intel: Core i5 (>3ª gen.) o i7 — oppure Mac Apple Silicon: chip M1 o successivi</span></div>
@@ -682,7 +693,9 @@
   </div>
 
   <footer class="fine-print">
-    Specifiche basate sul documento ufficiale Dr.Veto "Requisiti minimi", aggiornate con gli equivalenti hardware attualmente in commercio. Per configurazioni oltre le 12 postazioni è sempre necessaria un'analisi dedicata da parte del supporto Dr.Veto.
+    <p>Specifiche basate sul documento ufficiale Dr.Veto "Requisiti minimi", aggiornate con gli equivalenti hardware attualmente in commercio. Per configurazioni oltre le 12 postazioni è sempre necessaria un'analisi dedicata da parte del supporto Dr.Veto.</p>
+    <p>Dati aggiornati ad Agosto 2026.</p>
+    <p class="company">Alcyon Italia S.p.A. — Via Del Lavoro 110, 12062 Cherasco (CN) — P.IVA 02241700042</p>
   </footer>
 
 </div>
