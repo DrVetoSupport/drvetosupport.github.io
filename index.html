@@ -92,12 +92,21 @@
     padding: 40px 24px 96px;
   }
 
+  .brand-logo {
+    height: 34px;
+    width: auto;
+    margin-bottom: 6px;
+  }
   header.top {
     display: flex;
     flex-direction: column;
+    align-items: flex-start;
     gap: 10px;
     max-width: 640px;
     margin-bottom: 40px;
+  }
+  @media print {
+    .brand-logo { height: 28px; }
   }
   .eyebrow {
     font-family: var(--font-mono);
@@ -595,6 +604,7 @@
 <div class="wrap">
 
   <header class="top">
+    <img class="brand-logo" src="data:image/png;base64,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" alt="Alcyon Italia">
     <span class="eyebrow">Dr.Veto · Requisiti di sistema</span>
     <h1>Configuratore Dr.Veto per la tua struttura</h1>
     <p class="lede">Indica quante postazioni hai in clinica: calcoliamo subito la configurazione consigliata per i PC client e per il server, proporzionata al numero di postazioni.</p>
@@ -710,60 +720,6 @@
         <p class="card-note">Su Mac, Dr.Veto va installato all'interno di una macchina virtuale Windows: sia i modelli Intel sia quelli con chip Apple Silicon (M1 e successivi) sono supportati. I MacBook Air vanno comunque validati dall'assistenza prima dell'acquisto.</p>
       </div>
 
-      <details class="compat">
-        <summary>
-          <span>Tabella completa di compatibilità CPU</span>
-          <span class="chevron">›</span>
-        </summary>
-        <div class="compat-body">
-          <div>
-            <p class="compat-sub">Windows — Intel</p>
-            <div class="table-scroll">
-              <table class="compat-table">
-                <thead><tr><th>Modello</th><th>Compatibilità</th></tr></thead>
-                <tbody>
-                  <tr><td class="model">Atom, Celeron, Core 2 Duo, Core Solo</td><td><span class="status no">✗ Non compatibile</span></td></tr>
-                  <tr><td class="model">Core i3</td><td><span class="status ok">✓ se successivo a i3-9100 (9ª gen.)</span></td></tr>
-                  <tr><td class="model">Core i5</td><td><span class="status ok">✓ se successivo a i5-9100 (9ª gen.)</span></td></tr>
-                  <tr><td class="model">Core i7, Core i9</td><td><span class="status ok">✓ Compatibile</span></td></tr>
-                  <tr><td class="model">Pentium</td><td><span class="status no">✗ Non compatibile</span></td></tr>
-                  <tr><td class="model">Altri modelli Intel</td><td><span class="status ask">✉ Contattaci</span></td></tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-          <div>
-            <p class="compat-sub">Windows — AMD</p>
-            <div class="table-scroll">
-              <table class="compat-table">
-                <thead><tr><th>Modello</th><th>Compatibilità</th></tr></thead>
-                <tbody>
-                  <tr><td class="model">A4, Athlon / Athlon II / Athlon 64, Duron, E / E1 / E2, G / Gx, Phenom, Sempron, Turion</td><td><span class="status no">✗ Non compatibile</span></td></tr>
-                  <tr><td class="model">A6, A8, A10</td><td><span class="status ask">✉ Contattaci</span></td></tr>
-                  <tr><td class="model">Ryzen 3, 5, 7</td><td><span class="status ok">✓ Compatibile</span></td></tr>
-                  <tr><td class="model">Altri modelli AMD</td><td><span class="status ask">✉ Contattaci</span></td></tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-          <div>
-            <p class="compat-sub">Mac — Intel</p>
-            <div class="table-scroll">
-              <table class="compat-table">
-                <thead><tr><th>Modello</th><th>Compatibilità</th></tr></thead>
-                <tbody>
-                  <tr><td class="model">Core i3</td><td><span class="status ask">✉ Contattaci</span></td></tr>
-                  <tr><td class="model">Core i5</td><td><span class="status ok">✓ se successivo alla 3ª gen.</span></td></tr>
-                  <tr><td class="model">Core i7</td><td><span class="status ok">✓ Compatibile</span></td></tr>
-                  <tr><td class="model">Apple Silicon (M1 e successivi)</td><td><span class="status ok">✓ Compatibile — richiede Parallels Desktop o VMware Fusion</span></td></tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-          <p class="card-note" style="border:none;padding-top:0;">Processori ARM (es. Microsoft SQ1/SQ2) non sono compatibili: solo Intel e AMD su Windows.</p>
-        </div>
-      </details>
-
     </div>
   </div>
   </section>
@@ -808,6 +764,28 @@
           <div class="spec-row"><span class="spec-key">OS</span><span class="spec-val">macOS 10.7 o successivi (Intel) — ultima versione disponibile (Apple Silicon)</span></div>
         </div>
         <p class="card-note">I MacBook Air vanno comunque validati dall'assistenza prima dell'acquisto.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-head">
+        <h3 class="card-title">Verifica un PC esistente</h3>
+      </div>
+      <div class="cpu-checker">
+        <div class="segmented small" role="group" aria-label="Tipo di postazione">
+          <button type="button" class="cpuOsBtn" id="cpuOsWin2" aria-pressed="true">PC Windows</button>
+          <button type="button" class="cpuOsBtn" id="cpuOsMac2" aria-pressed="false">Mac</button>
+        </div>
+        <input type="text" id="cpuInput2" class="cpu-input" placeholder="Modello CPU — es. i5-8500, Ryzen 5 3600, M1…" autocomplete="off">
+        <div id="cpuResult2" class="cpu-result" hidden></div>
+        <button type="button" id="howToFindBtn2" class="link-btn">Non sai qual è la CPU del tuo PC?</button>
+        <div class="notice" id="howToFindBox2" hidden>
+          <span>💡</span>
+          <span>
+            <strong>Windows:</strong> premi <code>Ctrl+Shift+Esc</code> per aprire Gestione attività, vai sulla scheda "Prestazioni" e clicca su "CPU": il nome completo del processore compare in alto a destra. In alternativa: Impostazioni → Sistema → Informazioni su.<br><br>
+            <strong>Mac:</strong> clicca sul logo Apple in alto a sinistra → "Informazioni su questo Mac": il modello del chip o del processore è indicato nella prima schermata.
+          </span>
+        </div>
       </div>
     </div>
 
@@ -986,34 +964,9 @@
   selectTab('drveto');
 
   // ---- CPU compatibility checker ----
-  const cpuOsWinBtn = document.getElementById('cpuOsWin');
-  const cpuOsMacBtn = document.getElementById('cpuOsMac');
-  const cpuInputEl = document.getElementById('cpuInput');
-  const cpuResultEl = document.getElementById('cpuResult');
-  const howToFindBtn = document.getElementById('howToFindBtn');
-  const howToFindBox = document.getElementById('howToFindBox');
-  let cpuOs = 'win';
-
-  function setCpuOs(os) {
-    cpuOs = os;
-    cpuOsWinBtn.setAttribute('aria-pressed', String(os === 'win'));
-    cpuOsMacBtn.setAttribute('aria-pressed', String(os === 'mac'));
-    evaluateCpu();
-  }
-  cpuOsWinBtn.addEventListener('click', () => setCpuOs('win'));
-  cpuOsMacBtn.addEventListener('click', () => setCpuOs('mac'));
-
-  function showVerdict(level, title, detail) {
-    cpuResultEl.hidden = false;
-    cpuResultEl.className = 'cpu-result ' + level;
-    const icon = level === 'ok' ? '✓' : level === 'no' ? '✗' : '✉';
-    cpuResultEl.innerHTML = `<span class="verdict-icon">${icon}</span><div><strong>${title}</strong><p>${detail}</p></div>`;
-  }
-
-  function evaluateCpu() {
-    const raw = cpuInputEl.value.trim();
-    if (!raw) { cpuResultEl.hidden = true; return; }
-    const q = raw.toLowerCase();
+  function evaluateCpuVerdict(os, raw) {
+    const q = raw.trim().toLowerCase();
+    if (!q) return null;
 
     const intelMatch = q.match(/i\s?([3579])[\s-]?(\d{3,5})/);
     const isUltra = /ultra/.test(q);
@@ -1025,64 +978,93 @@
       return num < 1000 ? 1 : Math.floor(num / 1000);
     }
 
-    if (cpuOs === 'win') {
+    if (os === 'win') {
       if (/atom|celeron|core\s*2\s*duo|core2duo|core\s*solo/.test(q)) {
-        showVerdict('no', 'Non compatibile', 'Questa famiglia di processori non soddisfa i requisiti minimi di dr.veto.');
-      } else if (/pentium/.test(q)) {
-        showVerdict('no', 'Non compatibile', 'I processori Pentium non sono supportati.');
-      } else if (/athlon|duron|sempron|turion|phenom|\ba4\b/.test(q)) {
-        showVerdict('no', 'Non compatibile', 'Questa famiglia AMD non soddisfa i requisiti minimi di dr.veto.');
-      } else if (/\ba6\b|\ba8\b|\ba10\b/.test(q)) {
-        showVerdict('ask', 'Da verificare con il supporto', "Per questo modello serve una verifica diretta con l'assistenza dr.veto.");
-      } else if (isUltra) {
-        showVerdict('ok', 'Compatibile', 'I processori Intel Core Ultra soddisfano ampiamente i requisiti minimi.');
-      } else if (intelMatch) {
+        return { level: 'no', title: 'Non compatibile', detail: 'Questa famiglia di processori non soddisfa i requisiti minimi di dr.veto.' };
+      }
+      if (/pentium/.test(q)) {
+        return { level: 'no', title: 'Non compatibile', detail: 'I processori Pentium non sono supportati.' };
+      }
+      if (/athlon|duron|sempron|turion|phenom|\ba4\b/.test(q)) {
+        return { level: 'no', title: 'Non compatibile', detail: 'Questa famiglia AMD non soddisfa i requisiti minimi di dr.veto.' };
+      }
+      if (/\ba6\b|\ba8\b|\ba10\b/.test(q)) {
+        return { level: 'ask', title: 'Da verificare con il supporto', detail: "Per questo modello serve una verifica diretta con l'assistenza dr.veto." };
+      }
+      if (isUltra) {
+        return { level: 'ok', title: 'Compatibile', detail: 'I processori Intel Core Ultra soddisfano ampiamente i requisiti minimi.' };
+      }
+      if (intelMatch) {
         const fam = intelMatch[1];
         const gen = intelGen(intelMatch[2]);
-        if (fam === '7' || fam === '9') {
-          showVerdict('ok', 'Compatibile', `Intel Core i${fam} è sempre compatibile con dr.veto.`);
-        } else if (gen >= 10) {
-          showVerdict('ok', 'Compatibile', `Intel Core i${fam} di ${gen}ª generazione soddisfa i requisiti minimi.`);
-        } else if (gen === 9) {
-          showVerdict('ask', 'Da verificare con il supporto', "Siamo al limite della compatibilità: verifica con l'assistenza dr.veto prima di procedere.");
-        } else {
-          showVerdict('no', 'Non compatibile', `Intel Core i${fam} di ${gen}ª generazione è sotto la soglia minima richiesta.`);
-        }
-      } else if (ryzenMatch) {
+        if (fam === '7' || fam === '9') return { level: 'ok', title: 'Compatibile', detail: `Intel Core i${fam} \u00e8 sempre compatibile con dr.veto.` };
+        if (gen >= 10) return { level: 'ok', title: 'Compatibile', detail: `Intel Core i${fam} di ${gen}\u00aa generazione soddisfa i requisiti minimi.` };
+        if (gen === 9) return { level: 'ask', title: 'Da verificare con il supporto', detail: "Siamo al limite della compatibilit\u00e0: verifica con l'assistenza dr.veto prima di procedere." };
+        return { level: 'no', title: 'Non compatibile', detail: `Intel Core i${fam} di ${gen}\u00aa generazione \u00e8 sotto la soglia minima richiesta.` };
+      }
+      if (ryzenMatch) {
         const fam = ryzenMatch[1];
-        if (fam === '3' || fam === '5' || fam === '7') {
-          showVerdict('ok', 'Compatibile', `AMD Ryzen ${fam} soddisfa i requisiti minimi di dr.veto.`);
-        } else {
-          showVerdict('ask', 'Da verificare con il supporto', "Per questo modello serve una verifica diretta con l'assistenza dr.veto.");
-        }
-      } else {
-        showVerdict('ask', 'Modello non riconosciuto', "Non riusciamo a identificare questo processore automaticamente: contatta il supporto dr.veto per una verifica.");
+        if (fam === '3' || fam === '5' || fam === '7') return { level: 'ok', title: 'Compatibile', detail: `AMD Ryzen ${fam} soddisfa i requisiti minimi di dr.veto.` };
+        return { level: 'ask', title: 'Da verificare con il supporto', detail: "Per questo modello serve una verifica diretta con l'assistenza dr.veto." };
       }
-    } else { // mac
-      if (isAppleSilicon) {
-        showVerdict('ok', 'Compatibile', 'I Mac con chip Apple Silicon (M1 e successivi) sono compatibili con dr.veto.');
-      } else if (intelMatch) {
-        const fam = intelMatch[1];
-        if (fam === '3') {
-          showVerdict('ask', 'Da verificare con il supporto', "Per Core i3 su Mac serve una verifica diretta con l'assistenza dr.veto.");
-        } else if (fam === '5') {
-          const gen = intelGen(intelMatch[2]);
-          if (gen > 3) showVerdict('ok', 'Compatibile', 'Intel Core i5 successivo alla 3ª generazione è compatibile.');
-          else showVerdict('no', 'Non compatibile', 'Serve almeno un Core i5 successivo alla 3ª generazione.');
-        } else {
-          showVerdict('ok', 'Compatibile', `Intel Core i${fam} è sempre compatibile su Mac.`);
-        }
-      } else if (/\bi3\b/.test(q)) {
-        showVerdict('ask', 'Da verificare con il supporto', "Contatta l'assistenza dr.veto per una verifica.");
-      } else {
-        showVerdict('ask', 'Modello non riconosciuto', "Non riusciamo a identificare questo processore automaticamente: contatta il supporto dr.veto per una verifica.");
-      }
+      return { level: 'ask', title: 'Modello non riconosciuto', detail: "Non riusciamo a identificare questo processore automaticamente: contatta il supporto dr.veto per una verifica." };
     }
+
+    // mac
+    if (isAppleSilicon) {
+      return { level: 'ok', title: 'Compatibile', detail: 'I Mac con chip Apple Silicon (M1 e successivi) sono compatibili con dr.veto.' };
+    }
+    if (intelMatch) {
+      const fam = intelMatch[1];
+      if (fam === '3') return { level: 'ask', title: 'Da verificare con il supporto', detail: "Per Core i3 su Mac serve una verifica diretta con l'assistenza dr.veto." };
+      if (fam === '5') {
+        const gen = intelGen(intelMatch[2]);
+        if (gen > 3) return { level: 'ok', title: 'Compatibile', detail: 'Intel Core i5 successivo alla 3\u00aa generazione \u00e8 compatibile.' };
+        return { level: 'no', title: 'Non compatibile', detail: 'Serve almeno un Core i5 successivo alla 3\u00aa generazione.' };
+      }
+      return { level: 'ok', title: 'Compatibile', detail: `Intel Core i${fam} \u00e8 sempre compatibile su Mac.` };
+    }
+    if (/\bi3\b/.test(q)) {
+      return { level: 'ask', title: 'Da verificare con il supporto', detail: "Contatta l'assistenza dr.veto per una verifica." };
+    }
+    return { level: 'ask', title: 'Modello non riconosciuto', detail: "Non riusciamo a identificare questo processore automaticamente: contatta il supporto dr.veto per una verifica." };
   }
 
-  cpuInputEl.addEventListener('input', evaluateCpu);
+  function initCpuChecker(suffix) {
+    const winBtn = document.getElementById('cpuOsWin' + suffix);
+    const macBtn = document.getElementById('cpuOsMac' + suffix);
+    const input = document.getElementById('cpuInput' + suffix);
+    const resultEl = document.getElementById('cpuResult' + suffix);
+    const howBtn = document.getElementById('howToFindBtn' + suffix);
+    const howBox = document.getElementById('howToFindBox' + suffix);
+    if (!winBtn || !input) return;
+    let os = 'win';
 
-  howToFindBtn.addEventListener('click', () => {
-    howToFindBox.hidden = !howToFindBox.hidden;
-  });
+    function render() {
+      const verdict = evaluateCpuVerdict(os, input.value);
+      if (!verdict) { resultEl.hidden = true; return; }
+      resultEl.hidden = false;
+      resultEl.className = 'cpu-result ' + verdict.level;
+      const icon = verdict.level === 'ok' ? '\u2713' : verdict.level === 'no' ? '\u2717' : '\u2709';
+      resultEl.innerHTML = `<span class="verdict-icon">${icon}</span><div><strong>${verdict.title}</strong><p>${verdict.detail}</p></div>`;
+    }
+
+    winBtn.addEventListener('click', () => {
+      os = 'win';
+      winBtn.setAttribute('aria-pressed', 'true');
+      macBtn.setAttribute('aria-pressed', 'false');
+      render();
+    });
+    macBtn.addEventListener('click', () => {
+      os = 'mac';
+      winBtn.setAttribute('aria-pressed', 'false');
+      macBtn.setAttribute('aria-pressed', 'true');
+      render();
+    });
+    input.addEventListener('input', render);
+    howBtn.addEventListener('click', () => { howBox.hidden = !howBox.hidden; });
+  }
+
+  initCpuChecker('');
+  initCpuChecker('2');
 </script>
