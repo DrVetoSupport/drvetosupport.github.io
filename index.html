@@ -6,23 +6,23 @@
 
 <style>
   :root {
-    --bg: #F2F5F3;
+    --bg: #FBF6EC;
     --surface: #FFFFFF;
-    --surface-2: #E8EDEA;
-    --ink: #142521;
-    --ink-soft: #4B5F59;
-    --line: #D7E0DC;
-    --accent: #0F6B5C;
-    --accent-ink: #FFFFFF;
-    --accent-soft: #DCEDE8;
+    --surface-2: #F5EEDD;
+    --ink: #1A1A1A;
+    --ink-soft: #6B6259;
+    --line: #E8DFCC;
+    --accent: #E09900;
+    --accent-ink: #1A1200;
+    --accent-soft: #FCEBC6;
     --good: #2E7D4F;
     --good-soft: #E4F3E9;
-    --warn: #A8671E;
-    --warn-soft: #FBF0DF;
+    --warn: #8A6520;
+    --warn-soft: #F3E7D2;
     --bad: #B23A32;
     --bad-soft: #FBE7E4;
-    --chip-bg: #EEF1EF;
-    --shadow: 0 1px 2px rgba(20,37,33,0.06), 0 8px 24px -12px rgba(20,37,33,0.18);
+    --chip-bg: #F2EBDC;
+    --shadow: 0 1px 2px rgba(26,18,0,0.06), 0 8px 24px -12px rgba(26,18,0,0.18);
 
     --font-display: "Source Serif 4", Georgia, "Times New Roman", serif;
     --font-body: "IBM Plex Sans", -apple-system, "Segoe UI", sans-serif;
@@ -31,42 +31,42 @@
 
   @media (prefers-color-scheme: dark) {
     :root:not([data-theme="light"]) {
-      --bg: #0F1715;
-      --surface: #16211E;
-      --surface-2: #1C2925;
-      --ink: #E9EFEC;
-      --ink-soft: #9FB3AC;
-      --line: #2A3733;
-      --accent: #55C6AE;
-      --accent-ink: #0B1615;
-      --accent-soft: #1B322C;
+      --bg: #16130C;
+      --surface: #201A10;
+      --surface-2: #2A2214;
+      --ink: #F3EDDF;
+      --ink-soft: #B7AA8E;
+      --line: #3A2F1C;
+      --accent: #FFB020;
+      --accent-ink: #1A1200;
+      --accent-soft: #3B2A10;
       --good: #74D19A;
       --good-soft: #17301F;
-      --warn: #E8B267;
+      --warn: #E0B15C;
       --warn-soft: #362A15;
       --bad: #E9897F;
       --bad-soft: #3A1D1A;
-      --chip-bg: #1C2925;
+      --chip-bg: #241D12;
       --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px -12px rgba(0,0,0,0.5);
     }
   }
   :root[data-theme="dark"] {
-    --bg: #0F1715;
-    --surface: #16211E;
-    --surface-2: #1C2925;
-    --ink: #E9EFEC;
-    --ink-soft: #9FB3AC;
-    --line: #2A3733;
-    --accent: #55C6AE;
-    --accent-ink: #0B1615;
-    --accent-soft: #1B322C;
+    --bg: #16130C;
+    --surface: #201A10;
+    --surface-2: #2A2214;
+    --ink: #F3EDDF;
+    --ink-soft: #B7AA8E;
+    --line: #3A2F1C;
+    --accent: #FFB020;
+    --accent-ink: #1A1200;
+    --accent-soft: #3B2A10;
     --good: #74D19A;
     --good-soft: #17301F;
-    --warn: #E8B267;
+    --warn: #E0B15C;
     --warn-soft: #362A15;
     --bad: #E9897F;
     --bad-soft: #3A1D1A;
-    --chip-bg: #1C2925;
+    --chip-bg: #241D12;
     --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px -12px rgba(0,0,0,0.5);
   }
 
@@ -122,6 +122,27 @@
     max-width: 58ch;
     margin: 0;
   }
+
+  .tabs {
+    display: flex;
+    gap: 28px;
+    border-bottom: 1px solid var(--line);
+    margin-bottom: 32px;
+  }
+  .tab {
+    font-family: var(--font-body);
+    font-size: 14.5px;
+    font-weight: 600;
+    padding: 0 2px 12px;
+    margin-bottom: -1px;
+    border: none;
+    background: transparent;
+    color: var(--ink-soft);
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+  }
+  .tab:hover { color: var(--ink); }
+  .tab[aria-selected="true"] { color: var(--accent); border-bottom-color: var(--accent); }
 
   .layout {
     display: grid;
@@ -442,6 +463,12 @@
     <p class="lede">Indica quante postazioni hai in clinica: calcoliamo subito la configurazione consigliata per i PC client e per il server, proporzionata al numero di postazioni.</p>
   </header>
 
+  <div class="tabs" role="tablist" aria-label="Prodotto">
+    <button type="button" class="tab" id="tabDrVeto" role="tab" aria-selected="true" aria-controls="panelDrVeto">dr.veto</button>
+    <button type="button" class="tab" id="tabAlcyon" role="tab" aria-selected="false" aria-controls="panelAlcyon">Alcyon Hub Requisiti</button>
+  </div>
+
+  <section id="panelDrVeto" role="tabpanel" aria-labelledby="tabDrVeto">
   <div class="layout">
 
     <!-- FORM -->
@@ -492,7 +519,7 @@
           </div>
           <div class="spec-list">
             <div class="spec-row"><span class="spec-key">CPU</span><span class="spec-val">Intel Core i3-14100 o superiore (o Intel Core Ultra 5 serie 200) — oppure AMD Ryzen 5 5600 o superiore</span></div>
-            <div class="spec-row"><span class="spec-key">RAM</span><span class="spec-val">8 GB (16 GB consigliati)</span></div>
+            <div class="spec-row"><span class="spec-key">RAM</span><span class="spec-val">16 GB</span></div>
             <div class="spec-row"><span class="spec-key">Storage</span><span class="spec-val">256 GB SSD / NVMe</span></div>
             <div class="spec-row"><span class="spec-key">Schermo</span><span class="spec-val">Full HD 1920×1080 — min. 1440×900 (16:9)</span></div>
             <div class="spec-row"><span class="spec-key">OS</span><span class="spec-val">Windows 11 (non versione S)</span></div>
@@ -580,6 +607,49 @@
 
     </div>
   </div>
+  </section>
+
+  <section id="panelAlcyon" role="tabpanel" aria-labelledby="tabAlcyon" hidden>
+
+    <div class="summary-bar">
+      <span class="pill good">Postazione singola</span>
+      <span class="desc">Alcyon Hub richiede un'unica postazione dedicata: non serve proporzionarla al numero di PC in struttura.</span>
+    </div>
+
+    <div class="cards" style="margin-top:18px;">
+      <div class="card">
+        <div class="card-head">
+          <h3 class="card-title">PC dedicato</h3>
+          <span class="card-tag">Windows</span>
+        </div>
+        <div class="spec-list">
+          <div class="spec-row"><span class="spec-key">CPU</span><span class="spec-val">Intel Core i5-14100 o superiore (o Intel Core Ultra 5 serie 200) — oppure AMD Ryzen 5 5600 o superiore</span></div>
+          <div class="spec-row"><span class="spec-key">RAM</span><span class="spec-val">16 GB</span></div>
+          <div class="spec-row"><span class="spec-key">Storage</span><span class="spec-val">256 GB SSD / NVMe</span></div>
+          <div class="spec-row"><span class="spec-key">Schermo</span><span class="spec-val">Full HD 1920×1080 — min. 1440×900 (16:9)</span></div>
+          <div class="spec-row"><span class="spec-key">OS</span><span class="spec-val">Windows 11 (non versione S)</span></div>
+          <div class="spec-row"><span class="spec-key">Virtualiz.</span><span class="spec-val">Abilitata</span></div>
+        </div>
+        <p class="card-note">Verifica che la virtualizzazione (Intel VT-x / AMD-V) sia attiva nel BIOS/UEFI del PC.</p>
+      </div>
+
+      <div class="card">
+        <div class="card-head">
+          <h3 class="card-title">PC dedicato</h3>
+          <span class="card-tag">Mac</span>
+        </div>
+        <div class="spec-list">
+          <div class="spec-row"><span class="spec-key">CPU</span><span class="spec-val">Mac Intel: Core i5 (>3ª gen.) o i7 — oppure Mac Apple Silicon: chip M1 o successivi</span></div>
+          <div class="spec-row"><span class="spec-key">RAM</span><span class="spec-val">16 GB</span></div>
+          <div class="spec-row"><span class="spec-key">Storage</span><span class="spec-val">256 GB SSD</span></div>
+          <div class="spec-row"><span class="spec-key">Schermo</span><span class="spec-val">min. 1440×900 (16:9)</span></div>
+          <div class="spec-row"><span class="spec-key">OS</span><span class="spec-val">macOS 10.7 o successivi (Intel) — ultima versione disponibile (Apple Silicon)</span></div>
+        </div>
+        <p class="card-note">I MacBook Air vanno comunque validati dall'assistenza prima dell'acquisto.</p>
+      </div>
+    </div>
+
+  </section>
 
   <div class="cta-bar">
     <div class="cta-text">
@@ -732,4 +802,22 @@
   });
 
   render();
+
+  const tabDrVeto = document.getElementById('tabDrVeto');
+  const tabAlcyon = document.getElementById('tabAlcyon');
+  const panelDrVeto = document.getElementById('panelDrVeto');
+  const panelAlcyon = document.getElementById('panelAlcyon');
+
+  function selectTab(name) {
+    const isDrVeto = name === 'drveto';
+    tabDrVeto.setAttribute('aria-selected', String(isDrVeto));
+    tabAlcyon.setAttribute('aria-selected', String(!isDrVeto));
+    panelDrVeto.hidden = !isDrVeto;
+    panelAlcyon.hidden = isDrVeto;
+  }
+
+  tabDrVeto.addEventListener('click', () => selectTab('drveto'));
+  tabAlcyon.addEventListener('click', () => selectTab('alcyon'));
+
+  selectTab('drveto');
 </script>
