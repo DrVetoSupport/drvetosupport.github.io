@@ -94,13 +94,13 @@
   }
 
   .brand-logo {
-    height: 30px;
+    height: 42px;
     width: auto;
     display: block;
   }
   .footer-logo {
     display: flex;
-    justify-content: center;
+    justify-content: flex-end;
     margin-top: 36px;
   }
   header.top {
@@ -117,22 +117,50 @@
     align-items: flex-start;
     gap: 10px;
   }
-  .header-art { flex-shrink: 0; }
-  .paw-pulse {
-    width: 62px;
-    height: 62px;
-    color: var(--accent);
-    animation: pawPulse 2.6s ease-in-out infinite;
+  .header-art {
+    flex-shrink: 0;
+    width: 88px;
+    height: 88px;
+    border-radius: 50%;
+    background: var(--accent-soft);
+    border: 1px solid color-mix(in srgb, var(--accent) 30%, transparent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
   }
-  @keyframes pawPulse {
-    0%, 100% { transform: scale(1); opacity: 0.82; }
-    50% { transform: scale(1.08); opacity: 1; }
+  .paw-pulse {
+    width: 48px;
+    height: 48px;
+    color: var(--accent);
+    animation: pawBounce 2.6s ease-in-out infinite;
+    transform-origin: 50% 78%;
+  }
+  .paw-trail {
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    color: var(--accent);
+    opacity: 0.35;
+    bottom: 14px;
+    left: 12px;
+    animation: pawTrail 2.6s ease-in-out infinite;
+  }
+  @keyframes pawBounce {
+    0%, 100% { transform: translateY(0) rotate(-5deg); }
+    25% { transform: translateY(-4px) rotate(4deg); }
+    50% { transform: translateY(0) rotate(-3deg); }
+    75% { transform: translateY(-3px) rotate(5deg); }
+  }
+  @keyframes pawTrail {
+    0%, 40%, 100% { opacity: 0; transform: scale(0.7); }
+    55%, 85% { opacity: 0.35; transform: scale(1); }
   }
   @media (max-width: 700px) {
     .header-art { display: none; }
   }
   @media print {
-    .brand-logo { height: 26px; }
+    .brand-logo { height: 32px; }
     .header-art { display: none; }
   }
   .eyebrow {
@@ -771,6 +799,13 @@
       <p class="lede">Indica quante postazioni hai in clinica: calcoliamo subito la configurazione consigliata per i PC client e per il server, proporzionata al numero di postazioni.</p>
     </div>
     <div class="header-art" aria-hidden="true">
+      <svg class="paw-trail" viewBox="0 0 100 100" fill="currentColor">
+        <ellipse cx="50" cy="66" rx="24" ry="20"/>
+        <ellipse cx="24" cy="34" rx="10" ry="13" transform="rotate(-15 24 34)"/>
+        <ellipse cx="46" cy="22" rx="10" ry="13"/>
+        <ellipse cx="70" cy="24" rx="10" ry="13" transform="rotate(6 70 24)"/>
+        <ellipse cx="82" cy="40" rx="9" ry="12" transform="rotate(18 82 40)"/>
+      </svg>
       <svg class="paw-pulse" viewBox="0 0 100 100" fill="currentColor">
         <ellipse cx="50" cy="66" rx="24" ry="20"/>
         <ellipse cx="24" cy="34" rx="10" ry="13" transform="rotate(-15 24 34)"/>
