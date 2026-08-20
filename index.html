@@ -500,6 +500,90 @@
   .cta-btn.primary { background: var(--accent); color: var(--accent-ink); border-color: transparent; }
   .cta-note { font-size: 11.5px; color: var(--ink-soft); margin-top: 8px; }
 
+  /* ---- pricing ---- */
+  .pricing-section {
+    margin-top: 32px;
+    padding-top: 28px;
+    border-top: 1px solid var(--line);
+  }
+  .pricing-head {
+    text-align: center;
+    max-width: 52ch;
+    margin: 0 auto 20px;
+  }
+  .pricing-head .eyebrow { display: block; margin-bottom: 6px; }
+  .pricing-head h2 {
+    font-family: var(--font-display);
+    font-size: 22px;
+    font-weight: 600;
+    margin: 0 0 6px;
+  }
+  .pricing-head p { margin: 0; color: var(--ink-soft); font-size: 13.5px; }
+
+  .pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 14px;
+  }
+  @media (max-width: 980px) { .pricing-grid { grid-template-columns: repeat(3, 1fr); } }
+  @media (max-width: 620px) { .pricing-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 420px) { .pricing-grid { grid-template-columns: 1fr; } }
+
+  .price-card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    display: flex;
+    flex-direction: column;
+    break-inside: avoid;
+  }
+  .price-head {
+    background: var(--ink);
+    color: var(--bg);
+    padding: 14px 10px;
+    text-align: center;
+  }
+  .price-tier {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 15px;
+    line-height: 1.25;
+  }
+  .price-sub {
+    font-size: 11px;
+    opacity: 0.75;
+    margin-top: 2px;
+  }
+  .price-amount {
+    padding: 18px 10px 12px;
+    text-align: center;
+    font-family: var(--font-mono);
+    font-size: 30px;
+    font-weight: 600;
+    color: var(--ink);
+    font-variant-numeric: tabular-nums;
+  }
+  .price-currency { font-size: 15px; vertical-align: top; position: relative; top: 3px; }
+  .price-period { display: block; font-size: 11px; font-weight: 500; color: var(--ink-soft); font-family: var(--font-body); margin-top: 2px; }
+  .price-extras {
+    padding: 12px 10px 16px;
+    border-top: 1px dashed var(--line);
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    font-size: 12px;
+    color: var(--ink-soft);
+    text-align: center;
+  }
+  .pricing-note {
+    text-align: center;
+    font-size: 11.5px;
+    color: var(--ink-soft);
+    margin-top: 16px;
+  }
+
   /* ---- CPU checker ---- */
   .cpu-checker {
     display: flex;
@@ -731,6 +815,72 @@
       </div>
 
     </div>
+  </div>
+
+  <div class="pricing-section">
+    <div class="pricing-head">
+      <span class="eyebrow">Abbonamento mensile</span>
+      <h2>Tariffe dr.veto</h2>
+      <p>Il canone dipende dal numero di utenti che accedono al gestionale, non dal numero di PC.</p>
+    </div>
+    <div class="pricing-grid">
+      <div class="price-card">
+        <div class="price-head">
+          <div class="price-tier">1 utente</div>
+          <div class="price-sub">1 postazione</div>
+        </div>
+        <div class="price-amount"><span class="price-currency">€</span>25<span class="price-period">/al mese</span></div>
+        <div class="price-extras">
+          <div>Installazione €300</div>
+          <div>Recupero dati €100</div>
+        </div>
+      </div>
+      <div class="price-card">
+        <div class="price-head">
+          <div class="price-tier">Fino a 3 utenti</div>
+          <div class="price-sub">Postazioni illimitate</div>
+        </div>
+        <div class="price-amount"><span class="price-currency">€</span>48<span class="price-period">/al mese</span></div>
+        <div class="price-extras">
+          <div>Installazione €300</div>
+          <div>Recupero dati €100</div>
+        </div>
+      </div>
+      <div class="price-card">
+        <div class="price-head">
+          <div class="price-tier">Fino a 5 utenti</div>
+          <div class="price-sub">Postazioni illimitate</div>
+        </div>
+        <div class="price-amount"><span class="price-currency">€</span>72<span class="price-period">/al mese</span></div>
+        <div class="price-extras">
+          <div>Installazione €300</div>
+          <div>Recupero dati €100</div>
+        </div>
+      </div>
+      <div class="price-card">
+        <div class="price-head">
+          <div class="price-tier">Da 6 a 15 utenti</div>
+          <div class="price-sub">Postazioni illimitate</div>
+        </div>
+        <div class="price-amount"><span class="price-currency">€</span>96<span class="price-period">/al mese</span></div>
+        <div class="price-extras">
+          <div>Installazione €300</div>
+          <div>Recupero dati €100</div>
+        </div>
+      </div>
+      <div class="price-card">
+        <div class="price-head">
+          <div class="price-tier">Oltre 15 utenti</div>
+          <div class="price-sub">Postazioni illimitate</div>
+        </div>
+        <div class="price-amount"><span class="price-currency">€</span>108<span class="price-period">/al mese</span></div>
+        <div class="price-extras">
+          <div>Installazione €300</div>
+          <div>Recupero dati €100</div>
+        </div>
+      </div>
+    </div>
+    <p class="pricing-note">I prezzi sopra indicati sono da intendersi IVA esclusa e riservati ai Soci Alcyon.</p>
   </div>
   </section>
 
