@@ -356,6 +356,10 @@
   .cards.single .card { max-width: 460px; }
   @media (max-width: 700px) { .cards { grid-template-columns: 1fr; } }
 
+  @keyframes cardIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
   .card {
     background: var(--surface);
     border: 1px solid var(--line);
@@ -365,6 +369,7 @@
     display: flex;
     flex-direction: column;
     gap: 16px;
+    animation: cardIn 0.3s ease;
   }
   .card-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
   .card-title {
@@ -391,12 +396,36 @@
   .spec-list { display: flex; flex-direction: column; gap: 12px; }
   .spec-row { display: grid; grid-template-columns: 84px 1fr; gap: 12px; align-items: baseline; }
   .spec-key {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
     font-size: 12px;
     color: var(--ink-soft);
     text-transform: uppercase;
     letter-spacing: 0.05em;
     font-weight: 500;
   }
+  .spec-key::before {
+    content: "";
+    width: 12px;
+    height: 12px;
+    flex-shrink: 0;
+    background-color: currentColor;
+    -webkit-mask-image: var(--spec-icon);
+    mask-image: var(--spec-icon);
+    -webkit-mask-size: contain;
+    mask-size: contain;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+    mask-position: center;
+  }
+  .spec-row[data-spec="cpu"] .spec-key { --spec-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='6' y='6' width='12' height='12' rx='1'/%3E%3Cpath d='M9 2v4M15 2v4M9 18v4M15 18v4M2 9h4M2 15h4M18 9h4M18 15h4'/%3E%3C/svg%3E"); }
+  .spec-row[data-spec="ram"] .spec-key { --spec-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='8' width='18' height='8' rx='1'/%3E%3Cpath d='M7 8V5M11 8V5M15 8V5M7 16v3M11 16v3M15 16v3'/%3E%3C/svg%3E"); }
+  .spec-row[data-spec="storage"] .spec-key { --spec-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='4' width='18' height='16' rx='2'/%3E%3Cline x1='3' y1='12' x2='21' y2='12'/%3E%3Ccircle cx='7' cy='16' r='1' fill='%23000'/%3E%3C/svg%3E"); }
+  .spec-row[data-spec="schermo"] .spec-key { --spec-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='4' width='18' height='12' rx='1'/%3E%3Cline x1='8' y1='20' x2='16' y2='20'/%3E%3Cline x1='12' y1='16' x2='12' y2='20'/%3E%3C/svg%3E"); }
+  .spec-row[data-spec="os"] .spec-key { --spec-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='4' width='18' height='16' rx='2'/%3E%3Cline x1='3' y1='9' x2='21' y2='9'/%3E%3C/svg%3E"); }
+  .spec-row[data-spec="virtualizzazione"] .spec-key, .spec-row[data-spec="vm"] .spec-key { --spec-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 2 2 7l10 5 10-5-10-5z'/%3E%3Cpath d='M2 17l10 5 10-5'/%3E%3Cpath d='M2 12l10 5 10-5'/%3E%3C/svg%3E"); }
   .spec-val {
     font-family: var(--font-mono);
     font-size: 13.5px;
@@ -420,6 +449,7 @@
     display: flex;
     flex-direction: column;
     gap: 10px;
+    animation: cardIn 0.3s ease;
   }
   .contact-card .card-title { color: var(--warn); }
   .contact-card p { margin: 0; font-size: 14px; color: var(--ink); }
@@ -538,6 +568,7 @@
     display: flex;
     flex-direction: column;
     break-inside: avoid;
+    transition: border-color 0.25s ease, box-shadow 0.25s ease;
   }
   .price-card.is-match {
     border-color: var(--good);
@@ -622,6 +653,7 @@
     border-radius: 12px;
     padding: 14px 16px;
     font-size: 13.5px;
+    animation: cardIn 0.25s ease;
   }
   .cpu-result .verdict-icon { font-size: 17px; line-height: 1.3; }
   .cpu-result strong { display: block; margin-bottom: 2px; }
@@ -794,11 +826,11 @@
             <span class="card-tag"><svg viewBox="0 0 24 24" width="11" height="11" fill="currentColor" aria-hidden="true"><rect x="2" y="2" width="9" height="9"/><rect x="13" y="2" width="9" height="9"/><rect x="2" y="13" width="9" height="9"/><rect x="13" y="13" width="9" height="9"/></svg>Windows</span>
           </div>
           <div class="spec-list">
-            <div class="spec-row"><span class="spec-key">CPU</span><span class="spec-val">Intel Core i3-14100 o superiore (o Intel Core Ultra 5 serie 200) — oppure AMD Ryzen 5 5600 o superiore</span></div>
-            <div class="spec-row"><span class="spec-key">RAM</span><span class="spec-val">16 GB</span></div>
-            <div class="spec-row"><span class="spec-key">Storage</span><span class="spec-val">256 GB SSD / NVMe</span></div>
-            <div class="spec-row"><span class="spec-key">Schermo</span><span class="spec-val">Full HD 1920×1080 — min. 1440×900 (16:9)</span></div>
-            <div class="spec-row"><span class="spec-key">OS</span><span class="spec-val">Windows 11 (non versione S)</span></div>
+            <div class="spec-row" data-spec="cpu"><span class="spec-key">CPU</span><span class="spec-val">Intel Core i3-14100 o superiore (o Intel Core Ultra 5 serie 200) — oppure AMD Ryzen 5 5600 o superiore</span></div>
+            <div class="spec-row" data-spec="ram"><span class="spec-key">RAM</span><span class="spec-val">16 GB</span></div>
+            <div class="spec-row" data-spec="storage"><span class="spec-key">Storage</span><span class="spec-val">256 GB SSD / NVMe</span></div>
+            <div class="spec-row" data-spec="schermo"><span class="spec-key">Schermo</span><span class="spec-val">Full HD 1920×1080 — min. 1440×900 (16:9)</span></div>
+            <div class="spec-row" data-spec="os"><span class="spec-key">OS</span><span class="spec-val">Windows 11 (non versione S)</span></div>
           </div>
           <p class="card-note">Windows 10 non riceve più aggiornamenti Microsoft dal 14/10/2025: per nuove installazioni serve Windows 11.</p>
         </div>
@@ -817,12 +849,12 @@
           <span class="card-tag"><svg viewBox="0 0 24 24" width="11" height="11" fill="currentColor" aria-hidden="true"><path d="M15.8 3c.1 1-.3 2-1 2.8-.7.8-1.7 1.3-2.7 1.2-.1-1 .3-2.1 1-2.8C13.8 3.4 14.8 3 15.8 3z"/><path d="M18.9 16.8c-.5 1.1-1 2.1-1.7 3-1 1.3-2 2.6-3.5 2.6-1.4 0-1.9-.9-3.5-.9-1.6 0-2.1.9-3.5.9-1.4 0-2.5-1.4-3.5-2.7C1.3 17.4.6 13.9 1.8 11.5c.8-1.6 2.3-2.6 3.9-2.6 1.4 0 2.3.9 3.5.9 1.1 0 1.9-.9 3.5-.9 1.4 0 2.9.7 3.9 2-3.4 1.9-2.8 6.3 2.3 5.9z"/></svg>Mac</span>
         </div>
         <div class="spec-list">
-          <div class="spec-row"><span class="spec-key">CPU</span><span class="spec-val">Mac Intel: Core i5 (>3ª gen.) o i7 — oppure Mac Apple Silicon: chip M1 o successivi</span></div>
-          <div class="spec-row"><span class="spec-key">RAM</span><span class="spec-val">16 GB</span></div>
-          <div class="spec-row"><span class="spec-key">Storage</span><span class="spec-val">256 GB SSD</span></div>
-          <div class="spec-row"><span class="spec-key">Schermo</span><span class="spec-val">min. 1440×900 (16:9)</span></div>
-          <div class="spec-row"><span class="spec-key">OS</span><span class="spec-val">macOS 10.7 o successivi (Intel) — ultima versione disponibile (Apple Silicon)</span></div>
-          <div class="spec-row"><span class="spec-key">VM Windows</span><span class="spec-val">Parallels Desktop (licenza a pagamento) oppure VMware Fusion (gratuito) per eseguire una macchina virtuale Windows</span></div>
+          <div class="spec-row" data-spec="cpu"><span class="spec-key">CPU</span><span class="spec-val">Mac Intel: Core i5 (>3ª gen.) o i7 — oppure Mac Apple Silicon: chip M1 o successivi</span></div>
+          <div class="spec-row" data-spec="ram"><span class="spec-key">RAM</span><span class="spec-val">16 GB</span></div>
+          <div class="spec-row" data-spec="storage"><span class="spec-key">Storage</span><span class="spec-val">256 GB SSD</span></div>
+          <div class="spec-row" data-spec="schermo"><span class="spec-key">Schermo</span><span class="spec-val">min. 1440×900 (16:9)</span></div>
+          <div class="spec-row" data-spec="os"><span class="spec-key">OS</span><span class="spec-val">macOS 10.7 o successivi (Intel) — ultima versione disponibile (Apple Silicon)</span></div>
+          <div class="spec-row" data-spec="vm"><span class="spec-key">VM Windows</span><span class="spec-val">Parallels Desktop (licenza a pagamento) oppure VMware Fusion (gratuito) per eseguire una macchina virtuale Windows</span></div>
         </div>
         <p class="card-note">Su Mac, Dr.Veto va installato all'interno di una macchina virtuale Windows: sia i modelli Intel sia quelli con chip Apple Silicon (M1 e successivi) sono supportati. I MacBook Air vanno comunque validati dall'assistenza prima dell'acquisto.</p>
       </div>
@@ -923,12 +955,12 @@
           <span class="card-tag"><svg viewBox="0 0 24 24" width="11" height="11" fill="currentColor" aria-hidden="true"><rect x="2" y="2" width="9" height="9"/><rect x="13" y="2" width="9" height="9"/><rect x="2" y="13" width="9" height="9"/><rect x="13" y="13" width="9" height="9"/></svg>Windows</span>
         </div>
         <div class="spec-list">
-          <div class="spec-row"><span class="spec-key">CPU</span><span class="spec-val">Intel Core i5-14100 o superiore (o Intel Core Ultra 5 serie 200) — oppure AMD Ryzen 5 5600 o superiore</span></div>
-          <div class="spec-row"><span class="spec-key">RAM</span><span class="spec-val">16 GB</span></div>
-          <div class="spec-row"><span class="spec-key">Storage</span><span class="spec-val">256 GB SSD / NVMe</span></div>
-          <div class="spec-row"><span class="spec-key">Schermo</span><span class="spec-val">Full HD 1920×1080 — min. 1440×900 (16:9)</span></div>
-          <div class="spec-row"><span class="spec-key">OS</span><span class="spec-val">Windows 11 (non versione S)</span></div>
-          <div class="spec-row"><span class="spec-key">Virtualiz.</span><span class="spec-val">Abilitata</span></div>
+          <div class="spec-row" data-spec="cpu"><span class="spec-key">CPU</span><span class="spec-val">Intel Core i5-14100 o superiore (o Intel Core Ultra 5 serie 200) — oppure AMD Ryzen 5 5600 o superiore</span></div>
+          <div class="spec-row" data-spec="ram"><span class="spec-key">RAM</span><span class="spec-val">16 GB</span></div>
+          <div class="spec-row" data-spec="storage"><span class="spec-key">Storage</span><span class="spec-val">256 GB SSD / NVMe</span></div>
+          <div class="spec-row" data-spec="schermo"><span class="spec-key">Schermo</span><span class="spec-val">Full HD 1920×1080 — min. 1440×900 (16:9)</span></div>
+          <div class="spec-row" data-spec="os"><span class="spec-key">OS</span><span class="spec-val">Windows 11 (non versione S)</span></div>
+          <div class="spec-row" data-spec="virtualizzazione"><span class="spec-key">Virtualiz.</span><span class="spec-val">Abilitata</span></div>
         </div>
         <p class="card-note">Verifica che la virtualizzazione (Intel VT-x / AMD-V) sia attiva nel BIOS/UEFI del PC.</p>
       </div>
@@ -939,11 +971,11 @@
           <span class="card-tag"><svg viewBox="0 0 24 24" width="11" height="11" fill="currentColor" aria-hidden="true"><path d="M15.8 3c.1 1-.3 2-1 2.8-.7.8-1.7 1.3-2.7 1.2-.1-1 .3-2.1 1-2.8C13.8 3.4 14.8 3 15.8 3z"/><path d="M18.9 16.8c-.5 1.1-1 2.1-1.7 3-1 1.3-2 2.6-3.5 2.6-1.4 0-1.9-.9-3.5-.9-1.6 0-2.1.9-3.5.9-1.4 0-2.5-1.4-3.5-2.7C1.3 17.4.6 13.9 1.8 11.5c.8-1.6 2.3-2.6 3.9-2.6 1.4 0 2.3.9 3.5.9 1.1 0 1.9-.9 3.5-.9 1.4 0 2.9.7 3.9 2-3.4 1.9-2.8 6.3 2.3 5.9z"/></svg>Mac</span>
         </div>
         <div class="spec-list">
-          <div class="spec-row"><span class="spec-key">CPU</span><span class="spec-val">Mac Intel: Core i5 (>3ª gen.) o i7 — oppure Mac Apple Silicon: chip M1 o successivi</span></div>
-          <div class="spec-row"><span class="spec-key">RAM</span><span class="spec-val">16 GB</span></div>
-          <div class="spec-row"><span class="spec-key">Storage</span><span class="spec-val">256 GB SSD</span></div>
-          <div class="spec-row"><span class="spec-key">Schermo</span><span class="spec-val">min. 1440×900 (16:9)</span></div>
-          <div class="spec-row"><span class="spec-key">OS</span><span class="spec-val">macOS 10.7 o successivi (Intel) — ultima versione disponibile (Apple Silicon)</span></div>
+          <div class="spec-row" data-spec="cpu"><span class="spec-key">CPU</span><span class="spec-val">Mac Intel: Core i5 (>3ª gen.) o i7 — oppure Mac Apple Silicon: chip M1 o successivi</span></div>
+          <div class="spec-row" data-spec="ram"><span class="spec-key">RAM</span><span class="spec-val">16 GB</span></div>
+          <div class="spec-row" data-spec="storage"><span class="spec-key">Storage</span><span class="spec-val">256 GB SSD</span></div>
+          <div class="spec-row" data-spec="schermo"><span class="spec-key">Schermo</span><span class="spec-val">min. 1440×900 (16:9)</span></div>
+          <div class="spec-row" data-spec="os"><span class="spec-key">OS</span><span class="spec-val">macOS 10.7 o successivi (Intel) — ultima versione disponibile (Apple Silicon)</span></div>
         </div>
         <p class="card-note">I MacBook Air vanno comunque validati dall'assistenza prima dell'acquisto.</p>
       </div>
@@ -1082,9 +1114,9 @@
             <span class="card-tag">Gestionale</span>
           </div>
           <div class="spec-list">
-            <div class="spec-row"><span class="spec-key">CPU</span><span class="spec-val">${tier.server.cpu}</span></div>
-            <div class="spec-row"><span class="spec-key">RAM</span><span class="spec-val">${tier.server.ram}</span></div>
-            <div class="spec-row"><span class="spec-key">Storage</span><span class="spec-val">${tier.server.storage}</span></div>
+            <div class="spec-row" data-spec="cpu"><span class="spec-key">CPU</span><span class="spec-val">${tier.server.cpu}</span></div>
+            <div class="spec-row" data-spec="ram"><span class="spec-key">RAM</span><span class="spec-val">${tier.server.ram}</span></div>
+            <div class="spec-row" data-spec="storage"><span class="spec-key">Storage</span><span class="spec-val">${tier.server.storage}</span></div>
           </div>
           <p class="card-note">${tier.server.note}</p>
         </div>`;
