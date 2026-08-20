@@ -144,6 +144,19 @@
   .tab:hover { color: var(--ink); }
   .tab[aria-selected="true"] { color: var(--accent); border-bottom-color: var(--accent); }
 
+  .product-box {
+    background: var(--accent-soft);
+    border: 1px solid color-mix(in srgb, var(--accent) 30%, transparent);
+    border-radius: 12px;
+    padding: 14px 18px;
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--ink);
+    margin-bottom: 24px;
+  }
+  .product-box a { color: var(--accent); font-weight: 600; text-decoration: underline; text-underline-offset: 2px; }
+  .product-box a:hover { color: var(--ink); }
+
   .layout {
     display: grid;
     grid-template-columns: 320px 1fr;
@@ -465,10 +478,11 @@
 
   <div class="tabs" role="tablist" aria-label="Prodotto">
     <button type="button" class="tab" id="tabDrVeto" role="tab" aria-selected="true" aria-controls="panelDrVeto">dr.veto</button>
-    <button type="button" class="tab" id="tabAlcyon" role="tab" aria-selected="false" aria-controls="panelAlcyon">Alcyon Hub Requisiti</button>
+    <button type="button" class="tab" id="tabAlcyon" role="tab" aria-selected="false" aria-controls="panelAlcyon">Alcyon Hub</button>
   </div>
 
   <section id="panelDrVeto" role="tabpanel" aria-labelledby="tabDrVeto">
+  <div class="product-box">Gestionale Veterinario</div>
   <div class="layout">
 
     <!-- FORM -->
@@ -610,6 +624,8 @@
   </section>
 
   <section id="panelAlcyon" role="tabpanel" aria-labelledby="tabAlcyon" hidden>
+
+    <div class="product-box">Applicativo per il collegamento dei macchinari di Laboratorio e Diagnostica per immagini collegabili ai gestionali <a href="https://www.drveto.it/" target="_blank" rel="noopener">Dr.Veto</a> e <a href="https://www.gestionalevetsgo.it/" target="_blank" rel="noopener">VetsGo</a>.</div>
 
     <div class="summary-bar">
       <span class="pill good">Postazione singola</span>
