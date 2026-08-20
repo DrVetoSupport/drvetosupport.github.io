@@ -181,6 +181,10 @@
 
   .field { margin-bottom: 24px; }
   .field:last-child { margin-bottom: 0; }
+  .field.cpu-field {
+    padding-top: 20px;
+    border-top: 1px solid var(--line);
+  }
   .field-label {
     display: block;
     font-size: 13.5px;
@@ -539,7 +543,7 @@
 
   @page { margin: 10mm; }
   @media print {
-    .tabs, .panel, .print-btn, details.compat, .cpu-check-card, .cta-bar, .lede {
+    .tabs, .panel, .print-btn, details.compat, .cta-bar, .lede {
       display: none !important;
     }
     body { background: #fff; color: #000; font-size: 12px; }
@@ -635,6 +639,26 @@
         </label>
       </div>
 
+      <div class="field cpu-field">
+        <span class="field-label">Verifica un PC esistente</span>
+        <div class="cpu-checker">
+          <div class="segmented small" role="group" aria-label="Tipo di postazione">
+            <button type="button" class="cpuOsBtn" id="cpuOsWin" aria-pressed="true">PC Windows</button>
+            <button type="button" class="cpuOsBtn" id="cpuOsMac" aria-pressed="false">Mac</button>
+          </div>
+          <input type="text" id="cpuInput" class="cpu-input" placeholder="Modello CPU — es. i5-8500, Ryzen 5 3600, M1…" autocomplete="off">
+          <div id="cpuResult" class="cpu-result" hidden></div>
+          <button type="button" id="howToFindBtn" class="link-btn">Non sai qual è la CPU del tuo PC?</button>
+          <div class="notice" id="howToFindBox" hidden>
+            <span>💡</span>
+            <span>
+              <strong>Windows:</strong> premi <code>Ctrl+Shift+Esc</code> per aprire Gestione attività, vai sulla scheda "Prestazioni" e clicca su "CPU": il nome completo del processore compare in alto a destra. In alternativa: Impostazioni → Sistema → Informazioni su.<br><br>
+              <strong>Mac:</strong> clicca sul logo Apple in alto a sinistra → "Informazioni su questo Mac": il modello del chip o del processore è indicato nella prima schermata.
+            </span>
+          </div>
+        </div>
+      </div>
+
     </div>
 
     <!-- RESULTS -->
@@ -644,28 +668,6 @@
         <span class="pill" id="tierPill">—</span>
         <span class="desc" id="tierDesc">—</span>
         <button type="button" class="print-btn" onclick="window.print()">🖨️ Stampa / Esporta PDF</button>
-      </div>
-
-      <div class="card cpu-check-card">
-        <div class="card-head">
-          <h3 class="card-title">Verifica se un PC che hai già è compatibile</h3>
-        </div>
-        <div class="cpu-checker">
-          <div class="segmented small" role="group" aria-label="Tipo di postazione">
-            <button type="button" class="cpuOsBtn" id="cpuOsWin" aria-pressed="true">PC Windows</button>
-            <button type="button" class="cpuOsBtn" id="cpuOsMac" aria-pressed="false">Mac</button>
-          </div>
-          <input type="text" id="cpuInput" class="cpu-input" placeholder="Scrivi il modello della CPU — es. Intel Core i5-8500, Ryzen 5 3600, Apple M1…" autocomplete="off">
-          <div id="cpuResult" class="cpu-result" hidden></div>
-          <button type="button" id="howToFindBtn" class="link-btn">Non sai qual è la CPU del tuo PC? Scopri come trovarla</button>
-          <div class="notice" id="howToFindBox" hidden>
-            <span>💡</span>
-            <span>
-              <strong>Windows:</strong> premi <code>Ctrl+Shift+Esc</code> per aprire Gestione attività, vai sulla scheda "Prestazioni" e clicca su "CPU": il nome completo del processore compare in alto a destra. In alternativa: Impostazioni → Sistema → Informazioni su.<br><br>
-              <strong>Mac:</strong> clicca sul logo Apple in alto a sinistra → "Informazioni su questo Mac": il modello del chip o del processore è indicato nella prima schermata.
-            </span>
-          </div>
-        </div>
       </div>
 
       <div class="cards" id="cardsGrid">
