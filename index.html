@@ -1,0 +1,735 @@
+<meta charset="UTF-8">
+<title>Configuratore Dr.Veto</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,500;8..60,600;8..60,700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --bg: #F2F5F3;
+    --surface: #FFFFFF;
+    --surface-2: #E8EDEA;
+    --ink: #142521;
+    --ink-soft: #4B5F59;
+    --line: #D7E0DC;
+    --accent: #0F6B5C;
+    --accent-ink: #FFFFFF;
+    --accent-soft: #DCEDE8;
+    --good: #2E7D4F;
+    --good-soft: #E4F3E9;
+    --warn: #A8671E;
+    --warn-soft: #FBF0DF;
+    --bad: #B23A32;
+    --bad-soft: #FBE7E4;
+    --chip-bg: #EEF1EF;
+    --shadow: 0 1px 2px rgba(20,37,33,0.06), 0 8px 24px -12px rgba(20,37,33,0.18);
+
+    --font-display: "Source Serif 4", Georgia, "Times New Roman", serif;
+    --font-body: "IBM Plex Sans", -apple-system, "Segoe UI", sans-serif;
+    --font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0F1715;
+      --surface: #16211E;
+      --surface-2: #1C2925;
+      --ink: #E9EFEC;
+      --ink-soft: #9FB3AC;
+      --line: #2A3733;
+      --accent: #55C6AE;
+      --accent-ink: #0B1615;
+      --accent-soft: #1B322C;
+      --good: #74D19A;
+      --good-soft: #17301F;
+      --warn: #E8B267;
+      --warn-soft: #362A15;
+      --bad: #E9897F;
+      --bad-soft: #3A1D1A;
+      --chip-bg: #1C2925;
+      --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px -12px rgba(0,0,0,0.5);
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #0F1715;
+    --surface: #16211E;
+    --surface-2: #1C2925;
+    --ink: #E9EFEC;
+    --ink-soft: #9FB3AC;
+    --line: #2A3733;
+    --accent: #55C6AE;
+    --accent-ink: #0B1615;
+    --accent-soft: #1B322C;
+    --good: #74D19A;
+    --good-soft: #17301F;
+    --warn: #E8B267;
+    --warn-soft: #362A15;
+    --bad: #E9897F;
+    --bad-soft: #3A1D1A;
+    --chip-bg: #1C2925;
+    --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px -12px rgba(0,0,0,0.5);
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  [hidden] { display: none !important; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--font-body);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    * { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
+  }
+
+  a { color: var(--accent); }
+
+  .wrap {
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 40px 24px 96px;
+  }
+
+  header.top {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-width: 640px;
+    margin-bottom: 40px;
+  }
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 12.5px;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 500;
+  }
+  h1 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: clamp(28px, 4vw, 38px);
+    line-height: 1.15;
+    margin: 0;
+    text-wrap: balance;
+    letter-spacing: -0.01em;
+  }
+  .lede {
+    color: var(--ink-soft);
+    font-size: 16px;
+    max-width: 58ch;
+    margin: 0;
+  }
+
+  .layout {
+    display: grid;
+    grid-template-columns: 320px 1fr;
+    gap: 28px;
+    align-items: start;
+  }
+  @media (max-width: 860px) {
+    .layout { grid-template-columns: 1fr; }
+  }
+
+  /* ---- form panel ---- */
+  .panel {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 24px;
+    box-shadow: var(--shadow);
+    position: sticky;
+    top: 24px;
+  }
+  @media (max-width: 860px) { .panel { position: static; } }
+
+  .field { margin-bottom: 24px; }
+  .field:last-child { margin-bottom: 0; }
+  .field-label {
+    display: block;
+    font-size: 13.5px;
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+  .field-help {
+    font-size: 12.5px;
+    color: var(--ink-soft);
+    margin-top: 6px;
+  }
+
+  .stepper {
+    display: flex;
+    align-items: stretch;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    overflow: hidden;
+    background: var(--surface-2);
+  }
+  .stepper button {
+    width: 44px;
+    border: none;
+    background: transparent;
+    color: var(--ink);
+    font-size: 18px;
+    cursor: pointer;
+    font-family: var(--font-body);
+  }
+  .stepper button:hover { background: var(--accent-soft); color: var(--accent); }
+  .stepper button:focus-visible, .segmented button:focus-visible, .toggle-row:focus-within, details summary:focus-visible, .cta-btn:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+  .stepper output {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+    font-size: 20px;
+    font-weight: 600;
+  }
+
+  .segmented {
+    display: flex;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    background: var(--surface-2);
+    padding: 3px;
+    gap: 3px;
+  }
+  .segmented button {
+    flex: 1;
+    border: none;
+    background: transparent;
+    color: var(--ink-soft);
+    padding: 9px 8px;
+    border-radius: 7px;
+    font-family: var(--font-body);
+    font-size: 13.5px;
+    font-weight: 500;
+    cursor: pointer;
+  }
+  .segmented button[aria-pressed="true"] {
+    background: var(--accent);
+    color: var(--accent-ink);
+    font-weight: 600;
+  }
+
+  .toggle-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+  }
+  .switch {
+    position: relative;
+    width: 42px;
+    height: 24px;
+    flex-shrink: 0;
+    border-radius: 999px;
+    background: var(--surface-2);
+    border: 1px solid var(--line);
+    transition: background 0.15s ease;
+  }
+  .switch::after {
+    content: "";
+    position: absolute;
+    top: 2px; left: 2px;
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    background: var(--ink-soft);
+    transition: transform 0.15s ease, background 0.15s ease;
+  }
+  input[type="checkbox"]:checked + .toggle-row .switch,
+  .toggle-row input:checked ~ .switch { background: var(--accent); }
+  .toggle-row input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+  .toggle-row input:checked + .switch { background: var(--accent); }
+  .toggle-row input:checked + .switch::after { transform: translateX(18px); background: var(--accent-ink); }
+  .toggle-label { font-size: 13.5px; font-weight: 500; }
+
+  /* ---- results ---- */
+  .results { display: flex; flex-direction: column; gap: 18px; }
+
+  .summary-bar {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    padding: 14px 18px;
+    border-radius: 12px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    box-shadow: var(--shadow);
+  }
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 12.5px;
+    font-weight: 600;
+    padding: 5px 12px;
+    border-radius: 999px;
+    font-family: var(--font-mono);
+    letter-spacing: 0.02em;
+  }
+  .pill::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
+  .pill.good { background: var(--good-soft); color: var(--good); }
+  .pill.warn { background: var(--warn-soft); color: var(--warn); }
+  .pill.bad { background: var(--bad-soft); color: var(--bad); }
+  .summary-bar .desc { font-size: 13.5px; color: var(--ink-soft); }
+
+  .cards { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+  .cards.single { grid-template-columns: 1fr; }
+  .cards.single .card { max-width: 460px; }
+  @media (max-width: 700px) { .cards { grid-template-columns: 1fr; } }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 22px;
+    box-shadow: var(--shadow);
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .card-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+  .card-title {
+    font-family: var(--font-display);
+    font-size: 19px;
+    font-weight: 600;
+    margin: 0;
+  }
+  .card-tag {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--ink-soft);
+    background: var(--chip-bg);
+    padding: 3px 8px;
+    border-radius: 6px;
+  }
+
+  .spec-list { display: flex; flex-direction: column; gap: 12px; }
+  .spec-row { display: grid; grid-template-columns: 84px 1fr; gap: 12px; align-items: baseline; }
+  .spec-key {
+    font-size: 12px;
+    color: var(--ink-soft);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: 500;
+  }
+  .spec-val {
+    font-family: var(--font-mono);
+    font-size: 13.5px;
+    line-height: 1.5;
+    background: var(--chip-bg);
+    padding: 6px 10px;
+    border-radius: 7px;
+  }
+  .card-note {
+    font-size: 12.5px;
+    color: var(--ink-soft);
+    border-top: 1px dashed var(--line);
+    padding-top: 12px;
+  }
+
+  .contact-card {
+    background: var(--warn-soft);
+    border: 1px solid color-mix(in srgb, var(--warn) 35%, transparent);
+    border-radius: 14px;
+    padding: 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .contact-card .card-title { color: var(--warn); }
+  .contact-card p { margin: 0; font-size: 14px; color: var(--ink); }
+
+  .notice {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    background: var(--accent-soft);
+    border-radius: 12px;
+    padding: 14px 16px;
+    font-size: 13.5px;
+    color: var(--ink);
+  }
+  .notice strong { color: var(--accent); }
+
+  /* ---- compatibility accordion ---- */
+  details.compat {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+  }
+  details.compat summary {
+    cursor: pointer;
+    list-style: none;
+    padding: 18px 22px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-weight: 600;
+    font-size: 15px;
+  }
+  details.compat summary::-webkit-details-marker { display: none; }
+  details.compat summary .chevron { transition: transform 0.15s ease; color: var(--ink-soft); }
+  details.compat[open] summary .chevron { transform: rotate(90deg); }
+  .compat-body { padding: 0 22px 22px; display: flex; flex-direction: column; gap: 22px; }
+  .compat-sub { font-family: var(--font-display); font-size: 15px; font-weight: 600; margin: 0 0 10px; }
+
+  .table-scroll { overflow-x: auto; border: 1px solid var(--line); border-radius: 10px; }
+  table.compat-table { border-collapse: collapse; width: 100%; min-width: 480px; font-size: 13.5px; }
+  table.compat-table th, table.compat-table td {
+    text-align: left; padding: 9px 14px; border-bottom: 1px solid var(--line);
+  }
+  table.compat-table th { background: var(--surface-2); font-size: 11.5px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--ink-soft); font-weight: 600; }
+  table.compat-table tr:last-child td { border-bottom: none; }
+  table.compat-table td.model { font-family: var(--font-mono); }
+  .status { display: inline-flex; align-items: center; gap: 6px; font-weight: 600; }
+  .status.ok { color: var(--good); }
+  .status.no { color: var(--bad); }
+  .status.ask { color: var(--warn); }
+
+  /* ---- footer CTA ---- */
+  .cta-bar {
+    margin-top: 36px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: wrap;
+    box-shadow: var(--shadow);
+  }
+  .cta-text h2 { font-family: var(--font-display); font-size: 20px; margin: 0 0 6px; font-weight: 600; }
+  .cta-text p { margin: 0; color: var(--ink-soft); font-size: 14px; max-width: 46ch; }
+  .cta-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+  .cta-btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 11px 18px; border-radius: 10px;
+    font-family: var(--font-body); font-size: 14px; font-weight: 600;
+    text-decoration: none; border: 1px solid var(--line);
+    background: var(--surface-2); color: var(--ink);
+  }
+  .cta-btn.primary { background: var(--accent); color: var(--accent-ink); border-color: transparent; }
+  .cta-note { font-size: 11.5px; color: var(--ink-soft); margin-top: 8px; }
+
+  footer.fine-print {
+    margin-top: 28px;
+    font-size: 12px;
+    color: var(--ink-soft);
+    max-width: 72ch;
+  }
+</style>
+
+<div class="wrap">
+
+  <header class="top">
+    <span class="eyebrow">Dr.Veto · Requisiti di sistema</span>
+    <h1>Configuratore Dr.Veto per la tua struttura</h1>
+    <p class="lede">Indica quante postazioni hai in clinica: calcoliamo subito la configurazione consigliata per i PC client e per il server, proporzionata al numero di postazioni.</p>
+  </header>
+
+  <div class="layout">
+
+    <!-- FORM -->
+    <div class="panel">
+
+      <div class="field">
+        <label class="field-label" for="pcCount">Postazioni client (PC secondari)</label>
+        <div class="stepper">
+          <button type="button" id="minusBtn" aria-label="Diminuisci">−</button>
+          <output id="pcCount" for="minusBtn plusBtn">1</output>
+          <button type="button" id="plusBtn" aria-label="Aumenta">+</button>
+        </div>
+        <p class="field-help" id="pcHelp">Il numero di computer su cui verrà usato Dr.Veto, escluso il server.</p>
+      </div>
+
+      <div class="field">
+        <span class="field-label">Tipologia di struttura</span>
+        <div class="segmented" role="group" aria-label="Tipologia di struttura">
+          <button type="button" id="singleBtn" aria-pressed="true">Sede singola</button>
+          <button type="button" id="multiBtn" aria-pressed="false">Multi-sede</button>
+        </div>
+      </div>
+
+      <div class="field">
+        <span class="field-label">Postazioni Mac</span>
+        <label class="toggle-row">
+          <input type="checkbox" id="macToggle">
+          <span class="switch"></span>
+          <span class="toggle-label">Ho anche PC Mac da collegare</span>
+        </label>
+      </div>
+
+    </div>
+
+    <!-- RESULTS -->
+    <div class="results">
+
+      <div class="summary-bar">
+        <span class="pill" id="tierPill">—</span>
+        <span class="desc" id="tierDesc">—</span>
+      </div>
+
+      <div class="cards" id="cardsGrid">
+        <div class="card">
+          <div class="card-head">
+            <h3 class="card-title">Postazione client</h3>
+            <span class="card-tag">Windows</span>
+          </div>
+          <div class="spec-list">
+            <div class="spec-row"><span class="spec-key">CPU</span><span class="spec-val">Intel Core i3-14100 o superiore (o Intel Core Ultra 5 serie 200) — oppure AMD Ryzen 5 5600 o superiore</span></div>
+            <div class="spec-row"><span class="spec-key">RAM</span><span class="spec-val">8 GB (16 GB consigliati)</span></div>
+            <div class="spec-row"><span class="spec-key">Storage</span><span class="spec-val">256 GB SSD / NVMe</span></div>
+            <div class="spec-row"><span class="spec-key">Schermo</span><span class="spec-val">Full HD 1920×1080 — min. 1440×900 (16:9)</span></div>
+            <div class="spec-row"><span class="spec-key">OS</span><span class="spec-val">Windows 11 (non versione S)</span></div>
+          </div>
+          <p class="card-note">Windows 10 non riceve più aggiornamenti Microsoft dal 14/10/2025: per nuove installazioni serve Windows 11.</p>
+        </div>
+
+        <div id="serverSlot"></div>
+      </div>
+
+      <div class="notice" id="multiNotice" hidden>
+        <span>🌐</span>
+        <span><strong>Multi-sede:</strong> ogni sede ha bisogno del proprio server con la configurazione indicata. Per il collegamento tra sedi serve una connessione ADSL o Fibra da almeno 20 Mb/s in download e 10 Mb/s in upload (il 4G non è compatibile).</span>
+      </div>
+
+      <div class="card" id="macCard" hidden>
+        <div class="card-head">
+          <h3 class="card-title">Postazione client</h3>
+          <span class="card-tag">Mac</span>
+        </div>
+        <div class="spec-list">
+          <div class="spec-row"><span class="spec-key">CPU</span><span class="spec-val">Mac Intel: Core i5 (>3ª gen.) o i7 — oppure Mac Apple Silicon: chip M1 o successivi</span></div>
+          <div class="spec-row"><span class="spec-key">RAM</span><span class="spec-val">16 GB</span></div>
+          <div class="spec-row"><span class="spec-key">Storage</span><span class="spec-val">256 GB SSD</span></div>
+          <div class="spec-row"><span class="spec-key">Schermo</span><span class="spec-val">min. 1440×900 (16:9)</span></div>
+          <div class="spec-row"><span class="spec-key">OS</span><span class="spec-val">macOS 10.7 o successivi (Intel) — ultima versione disponibile (Apple Silicon)</span></div>
+          <div class="spec-row"><span class="spec-key">VM Windows</span><span class="spec-val">Parallels Desktop (licenza a pagamento) oppure VMware Fusion (gratuito) per eseguire una macchina virtuale Windows</span></div>
+        </div>
+        <p class="card-note">Su Mac, Dr.Veto va installato all'interno di una macchina virtuale Windows: sia i modelli Intel sia quelli con chip Apple Silicon (M1 e successivi) sono supportati. I MacBook Air vanno comunque validati dall'assistenza prima dell'acquisto.</p>
+      </div>
+
+      <details class="compat">
+        <summary>
+          <span>Hai già dei PC? Verifica se sono compatibili</span>
+          <span class="chevron">›</span>
+        </summary>
+        <div class="compat-body">
+          <div>
+            <p class="compat-sub">Windows — Intel</p>
+            <div class="table-scroll">
+              <table class="compat-table">
+                <thead><tr><th>Modello</th><th>Compatibilità</th></tr></thead>
+                <tbody>
+                  <tr><td class="model">Atom, Celeron, Core 2 Duo, Core Solo</td><td><span class="status no">✗ Non compatibile</span></td></tr>
+                  <tr><td class="model">Core i3</td><td><span class="status ok">✓ se successivo a i3-9100 (9ª gen.)</span></td></tr>
+                  <tr><td class="model">Core i5</td><td><span class="status ok">✓ se successivo a i5-9100 (9ª gen.)</span></td></tr>
+                  <tr><td class="model">Core i7, Core i9</td><td><span class="status ok">✓ Compatibile</span></td></tr>
+                  <tr><td class="model">Pentium</td><td><span class="status no">✗ generazioni vecchie</span> · <span class="status ask">✉ contattaci per le nuove</span></td></tr>
+                  <tr><td class="model">Altri modelli Intel</td><td><span class="status ask">✉ Contattaci</span></td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div>
+            <p class="compat-sub">Windows — AMD</p>
+            <div class="table-scroll">
+              <table class="compat-table">
+                <thead><tr><th>Modello</th><th>Compatibilità</th></tr></thead>
+                <tbody>
+                  <tr><td class="model">A4, Athlon / Athlon II / Athlon 64, Duron, E / E1 / E2, G / Gx, Phenom, Sempron, Turion</td><td><span class="status no">✗ Non compatibile</span></td></tr>
+                  <tr><td class="model">A6, A8, A10</td><td><span class="status ask">✉ Contattaci</span></td></tr>
+                  <tr><td class="model">Ryzen 3, 5, 7</td><td><span class="status ok">✓ Compatibile</span></td></tr>
+                  <tr><td class="model">Altri modelli AMD</td><td><span class="status ask">✉ Contattaci</span></td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div>
+            <p class="compat-sub">Mac — Intel</p>
+            <div class="table-scroll">
+              <table class="compat-table">
+                <thead><tr><th>Modello</th><th>Compatibilità</th></tr></thead>
+                <tbody>
+                  <tr><td class="model">Core i3</td><td><span class="status ask">✉ Contattaci</span></td></tr>
+                  <tr><td class="model">Core i5</td><td><span class="status ok">✓ se successivo alla 3ª gen.</span></td></tr>
+                  <tr><td class="model">Core i7</td><td><span class="status ok">✓ Compatibile</span></td></tr>
+                  <tr><td class="model">Apple Silicon (M1 e successivi)</td><td><span class="status ok">✓ Compatibile — richiede Parallels Desktop o VMware Fusion</span></td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <p class="card-note" style="border:none;padding-top:0;">Processori ARM (es. Microsoft SQ1/SQ2) non sono compatibili: solo Intel e AMD su Windows.</p>
+        </div>
+      </details>
+
+    </div>
+  </div>
+
+  <div class="cta-bar">
+    <div class="cta-text">
+      <h2>Hai dubbi sulla configurazione?</h2>
+      <p>Questi valori sono indicativi: per una validazione sul tuo caso specifico, parla con il nostro supporto prima di procedere all'acquisto.</p>
+    </div>
+    <div>
+      <div class="cta-actions">
+        <a class="cta-btn primary" href="tel:800060952">📞 Numero verde 800 060 952</a>
+        <a class="cta-btn" href="https://wa.me/393357354259" target="_blank" rel="noopener">💬 WhatsApp 335 735 4259</a>
+      </div>
+      <p class="cta-note">Chiamata gratuita da rete fissa e mobile.</p>
+    </div>
+  </div>
+
+  <footer class="fine-print">
+    Specifiche basate sul documento ufficiale Dr.Veto "Requisiti minimi", aggiornate con gli equivalenti hardware attualmente in commercio. Per configurazioni oltre le 12 postazioni è sempre necessaria un'analisi dedicata da parte del supporto Dr.Veto.
+  </footer>
+
+</div>
+
+<script>
+  const state = { count: 1, multi: false, mac: false };
+
+  const pcCountEl = document.getElementById('pcCount');
+  const pcHelpEl = document.getElementById('pcHelp');
+  const tierPillEl = document.getElementById('tierPill');
+  const tierDescEl = document.getElementById('tierDesc');
+  const serverSlotEl = document.getElementById('serverSlot');
+  const cardsEl = document.getElementById('cardsGrid');
+  const multiNoticeEl = document.getElementById('multiNotice');
+  const macCardEl = document.getElementById('macCard');
+
+  const TIERS = {
+    t1: {
+      label: '1–3 postazioni', severity: 'good', min: 1, max: 3,
+      server: {
+        cpu: 'Intel Core i5-14400 o superiore (o Intel Core Ultra 5 serie 200) — oppure AMD Ryzen 5 7600 o superiore',
+        ram: '16 GB',
+        storage: '256 GB SSD / NVMe',
+        note: 'Può fungere anche da postazione client.'
+      }
+    },
+    t2: {
+      label: '4–8 postazioni', severity: 'good', min: 4, max: 8,
+      server: {
+        cpu: 'Intel Core i5-14500 o superiore (o Intel Core Ultra 7 serie 200) — oppure AMD Ryzen 7 7700 o superiore',
+        ram: '16 GB (32 GB consigliati)',
+        storage: '256 GB SSD / NVMe',
+        note: 'Può fungere anche da postazione client.'
+      }
+    },
+    t3: {
+      label: '9–12 postazioni', severity: 'warn', min: 9, max: 12,
+      server: {
+        cpu: 'Intel Core i7-14700 o superiore (o Intel Core Ultra 7/9 serie 200) — oppure AMD Ryzen 7 9700X o superiore',
+        ram: '32 GB',
+        storage: '512 GB SSD / NVMe',
+        note: "Server dedicato: sconsigliato l'uso anche come postazione client."
+      }
+    },
+    t4: {
+      label: 'Oltre 12 postazioni', severity: 'bad', min: 13, max: Infinity,
+      server: null
+    }
+  };
+
+  function getTier(n) {
+    if (n <= 3) return TIERS.t1;
+    if (n <= 8) return TIERS.t2;
+    if (n <= 12) return TIERS.t3;
+    return TIERS.t4;
+  }
+
+  function render() {
+    pcCountEl.textContent = state.count;
+    pcHelpEl.textContent = state.count === 1
+      ? 'Il numero di computer su cui verrà usato Dr.Veto, escluso il server.'
+      : `${state.count} computer su cui verrà usato Dr.Veto, escluso il server.`;
+
+    const tier = getTier(state.count);
+    tierPillEl.className = 'pill ' + tier.severity;
+    tierPillEl.textContent = tier.label;
+
+    if (state.count === 1) {
+      tierDescEl.textContent = 'Con una sola postazione non serve un server separato: questo PC gestisce anche i dati del gestionale.';
+      serverSlotEl.innerHTML = '';
+      cardsEl.classList.add('single');
+    } else if (tier.server) {
+      cardsEl.classList.remove('single');
+      tierDescEl.textContent = state.multi
+        ? 'Configurazione per client e server, per ciascuna sede.'
+        : 'Configurazione consigliata per client e server.';
+
+      serverSlotEl.innerHTML = `
+        <div class="card">
+          <div class="card-head">
+            <h3 class="card-title">Server${state.multi ? ' (per sede)' : ''}</h3>
+            <span class="card-tag">Gestionale</span>
+          </div>
+          <div class="spec-list">
+            <div class="spec-row"><span class="spec-key">CPU</span><span class="spec-val">${tier.server.cpu}</span></div>
+            <div class="spec-row"><span class="spec-key">RAM</span><span class="spec-val">${tier.server.ram}</span></div>
+            <div class="spec-row"><span class="spec-key">Storage</span><span class="spec-val">${tier.server.storage}</span></div>
+          </div>
+          <p class="card-note">${tier.server.note}</p>
+        </div>`;
+    } else {
+      cardsEl.classList.remove('single');
+      tierDescEl.textContent = 'Serve una configurazione dedicata, valutata caso per caso.';
+      serverSlotEl.innerHTML = `
+        <div class="contact-card">
+          <span class="card-tag" style="align-self:flex-start;">Da validare</span>
+          <h3 class="card-title">Server dedicato su misura</h3>
+          <p>Con più di 12 postazioni la configurazione del server richiede un'analisi e una validazione da parte del supporto Dr.Veto prima dell'acquisto.</p>
+        </div>`;
+    }
+
+    multiNoticeEl.hidden = !state.multi;
+    macCardEl.hidden = !state.mac;
+  }
+
+  document.getElementById('minusBtn').addEventListener('click', () => {
+    state.count = Math.max(1, state.count - 1);
+    render();
+  });
+  document.getElementById('plusBtn').addEventListener('click', () => {
+    state.count = Math.min(40, state.count + 1);
+    render();
+  });
+
+  const singleBtn = document.getElementById('singleBtn');
+  const multiBtn = document.getElementById('multiBtn');
+  singleBtn.addEventListener('click', () => {
+    state.multi = false;
+    singleBtn.setAttribute('aria-pressed', 'true');
+    multiBtn.setAttribute('aria-pressed', 'false');
+    render();
+  });
+  multiBtn.addEventListener('click', () => {
+    state.multi = true;
+    singleBtn.setAttribute('aria-pressed', 'false');
+    multiBtn.setAttribute('aria-pressed', 'true');
+    render();
+  });
+
+  document.getElementById('macToggle').addEventListener('change', (e) => {
+    state.mac = e.target.checked;
+    render();
+  });
+
+  render();
+</script>
