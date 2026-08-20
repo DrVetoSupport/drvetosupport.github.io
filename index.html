@@ -1057,7 +1057,13 @@
 
     const tier = getTier(state.count);
     tierPillEl.className = 'pill ' + tier.severity;
-    tierPillEl.textContent = tier.label;
+    if (state.count === 1) {
+      tierPillEl.textContent = '1 postazione';
+    } else if (state.count <= 3) {
+      tierPillEl.textContent = '2–3 postazioni';
+    } else {
+      tierPillEl.textContent = tier.label;
+    }
 
     if (state.count === 1) {
       tierDescEl.textContent = 'Con una sola postazione non serve un server separato: questo PC gestisce anche i dati del gestionale.';
