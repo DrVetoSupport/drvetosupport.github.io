@@ -314,6 +314,23 @@
   .pill.warn { background: var(--warn-soft); color: var(--warn); }
   .pill.bad { background: var(--bad-soft); color: var(--bad); }
   .summary-bar .desc { font-size: 13.5px; color: var(--ink-soft); }
+  .print-btn {
+    margin-left: auto;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--font-body);
+    font-size: 12.5px;
+    font-weight: 600;
+    padding: 7px 12px;
+    border-radius: 8px;
+    border: 1px solid var(--line);
+    background: var(--surface-2);
+    color: var(--ink);
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  .print-btn:hover { background: var(--accent-soft); color: var(--accent); }
 
   .cards { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
   .cards.single { grid-template-columns: 1fr; }
@@ -464,6 +481,73 @@
   .cta-btn.primary { background: var(--accent); color: var(--accent-ink); border-color: transparent; }
   .cta-note { font-size: 11.5px; color: var(--ink-soft); margin-top: 8px; }
 
+  /* ---- CPU checker ---- */
+  .cpu-checker {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding-bottom: 22px;
+    margin-bottom: 4px;
+    border-bottom: 1px solid var(--line);
+  }
+  .segmented.small { max-width: 260px; }
+  .cpu-input {
+    width: 100%;
+    padding: 11px 14px;
+    border-radius: 10px;
+    border: 1px solid var(--line);
+    background: var(--surface-2);
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-size: 14px;
+  }
+  .cpu-input:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+  .cpu-result {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    border-radius: 12px;
+    padding: 14px 16px;
+    font-size: 13.5px;
+  }
+  .cpu-result .verdict-icon { font-size: 17px; line-height: 1.3; }
+  .cpu-result strong { display: block; margin-bottom: 2px; }
+  .cpu-result p { margin: 0; color: var(--ink); }
+  .cpu-result.ok { background: var(--good-soft); }
+  .cpu-result.ok strong { color: var(--good); }
+  .cpu-result.no { background: var(--bad-soft); }
+  .cpu-result.no strong { color: var(--bad); }
+  .cpu-result.ask { background: var(--warn-soft); }
+  .cpu-result.ask strong { color: var(--warn); }
+  .link-btn {
+    background: none;
+    border: none;
+    padding: 0;
+    color: var(--accent);
+    font-weight: 600;
+    font-size: 12.5px;
+    cursor: pointer;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    font-family: var(--font-body);
+    text-align: left;
+  }
+  .cpu-checker code {
+    font-family: var(--font-mono);
+    background: var(--chip-bg);
+    padding: 1px 5px;
+    border-radius: 4px;
+    font-size: 0.9em;
+  }
+
+  @media print {
+    .tabs, .panel, #panelDrVeto > .layout > .panel, .print-btn, details.compat, .cta-actions, .cta-note { display: none !important; }
+    body { background: #fff; color: #000; }
+    .card, .summary-bar, .notice, .contact-card, .product-box { box-shadow: none !important; border-color: #ccc !important; }
+    .layout { grid-template-columns: 1fr !important; }
+    a { color: #000; text-decoration: none; }
+  }
+
   footer.fine-print {
     margin-top: 28px;
     font-size: 12px;
@@ -534,6 +618,7 @@
       <div class="summary-bar">
         <span class="pill" id="tierPill">—</span>
         <span class="desc" id="tierDesc">—</span>
+        <button type="button" class="print-btn" onclick="window.print()">🖨️ Stampa / Esporta PDF</button>
       </div>
 
       <div class="cards" id="cardsGrid">
@@ -582,6 +667,24 @@
           <span class="chevron">›</span>
         </summary>
         <div class="compat-body">
+
+          <div class="cpu-checker">
+            <div class="segmented small" role="group" aria-label="Tipo di postazione">
+              <button type="button" class="cpuOsBtn" id="cpuOsWin" aria-pressed="true">PC Windows</button>
+              <button type="button" class="cpuOsBtn" id="cpuOsMac" aria-pressed="false">Mac</button>
+            </div>
+            <input type="text" id="cpuInput" class="cpu-input" placeholder="Scrivi il modello della CPU — es. Intel Core i5-8500, Ryzen 5 3600, Apple M1…" autocomplete="off">
+            <div id="cpuResult" class="cpu-result" hidden></div>
+            <button type="button" id="howToFindBtn" class="link-btn">Non sai qual è la CPU del tuo PC? Scopri come trovarla</button>
+            <div class="notice" id="howToFindBox" hidden>
+              <span>💡</span>
+              <span>
+                <strong>Windows:</strong> premi <code>Ctrl+Shift+Esc</code> per aprire Gestione attività, vai sulla scheda "Prestazioni" e clicca su "CPU": il nome completo del processore compare in alto a destra. In alternativa: Impostazioni → Sistema → Informazioni su.<br><br>
+                <strong>Mac:</strong> clicca sul logo Apple in alto a sinistra → "Informazioni su questo Mac": il modello del chip o del processore è indicato nella prima schermata.
+              </span>
+            </div>
+          </div>
+
           <div>
             <p class="compat-sub">Windows — Intel</p>
             <div class="table-scroll">
@@ -641,6 +744,7 @@
     <div class="summary-bar">
       <span class="pill good">Postazione singola</span>
       <span class="desc">Alcyon Hub richiede un'unica postazione dedicata: non serve proporzionarla al numero di PC in struttura.</span>
+      <button type="button" class="print-btn" onclick="window.print()">🖨️ Stampa / Esporta PDF</button>
     </div>
 
     <div class="cards" style="margin-top:18px;">
@@ -849,4 +953,105 @@
   tabAlcyon.addEventListener('click', () => selectTab('alcyon'));
 
   selectTab('drveto');
+
+  // ---- CPU compatibility checker ----
+  const cpuOsWinBtn = document.getElementById('cpuOsWin');
+  const cpuOsMacBtn = document.getElementById('cpuOsMac');
+  const cpuInputEl = document.getElementById('cpuInput');
+  const cpuResultEl = document.getElementById('cpuResult');
+  const howToFindBtn = document.getElementById('howToFindBtn');
+  const howToFindBox = document.getElementById('howToFindBox');
+  let cpuOs = 'win';
+
+  function setCpuOs(os) {
+    cpuOs = os;
+    cpuOsWinBtn.setAttribute('aria-pressed', String(os === 'win'));
+    cpuOsMacBtn.setAttribute('aria-pressed', String(os === 'mac'));
+    evaluateCpu();
+  }
+  cpuOsWinBtn.addEventListener('click', () => setCpuOs('win'));
+  cpuOsMacBtn.addEventListener('click', () => setCpuOs('mac'));
+
+  function showVerdict(level, title, detail) {
+    cpuResultEl.hidden = false;
+    cpuResultEl.className = 'cpu-result ' + level;
+    const icon = level === 'ok' ? '✓' : level === 'no' ? '✗' : '✉';
+    cpuResultEl.innerHTML = `<span class="verdict-icon">${icon}</span><div><strong>${title}</strong><p>${detail}</p></div>`;
+  }
+
+  function evaluateCpu() {
+    const raw = cpuInputEl.value.trim();
+    if (!raw) { cpuResultEl.hidden = true; return; }
+    const q = raw.toLowerCase();
+
+    const intelMatch = q.match(/i\s?([3579])[\s-]?(\d{3,5})/);
+    const isUltra = /ultra/.test(q);
+    const ryzenMatch = q.match(/ryzen\s*([3579])/);
+    const isAppleSilicon = /\bm[1-4]\b/.test(q) || /apple silicon/.test(q);
+
+    function intelGen(numStr) {
+      const num = parseInt(numStr, 10);
+      return num < 1000 ? 1 : Math.floor(num / 1000);
+    }
+
+    if (cpuOs === 'win') {
+      if (/atom|celeron|core\s*2\s*duo|core2duo|core\s*solo/.test(q)) {
+        showVerdict('no', 'Non compatibile', 'Questa famiglia di processori non soddisfa i requisiti minimi di dr.veto.');
+      } else if (/pentium/.test(q)) {
+        showVerdict('no', 'Non compatibile', 'I processori Pentium non sono supportati.');
+      } else if (/athlon|duron|sempron|turion|phenom|\ba4\b/.test(q)) {
+        showVerdict('no', 'Non compatibile', 'Questa famiglia AMD non soddisfa i requisiti minimi di dr.veto.');
+      } else if (/\ba6\b|\ba8\b|\ba10\b/.test(q)) {
+        showVerdict('ask', 'Da verificare con il supporto', "Per questo modello serve una verifica diretta con l'assistenza dr.veto.");
+      } else if (isUltra) {
+        showVerdict('ok', 'Compatibile', 'I processori Intel Core Ultra soddisfano ampiamente i requisiti minimi.');
+      } else if (intelMatch) {
+        const fam = intelMatch[1];
+        const gen = intelGen(intelMatch[2]);
+        if (fam === '7' || fam === '9') {
+          showVerdict('ok', 'Compatibile', `Intel Core i${fam} è sempre compatibile con dr.veto.`);
+        } else if (gen >= 10) {
+          showVerdict('ok', 'Compatibile', `Intel Core i${fam} di ${gen}ª generazione soddisfa i requisiti minimi.`);
+        } else if (gen === 9) {
+          showVerdict('ask', 'Da verificare con il supporto', "Siamo al limite della compatibilità: verifica con l'assistenza dr.veto prima di procedere.");
+        } else {
+          showVerdict('no', 'Non compatibile', `Intel Core i${fam} di ${gen}ª generazione è sotto la soglia minima richiesta.`);
+        }
+      } else if (ryzenMatch) {
+        const fam = ryzenMatch[1];
+        if (fam === '3' || fam === '5' || fam === '7') {
+          showVerdict('ok', 'Compatibile', `AMD Ryzen ${fam} soddisfa i requisiti minimi di dr.veto.`);
+        } else {
+          showVerdict('ask', 'Da verificare con il supporto', "Per questo modello serve una verifica diretta con l'assistenza dr.veto.");
+        }
+      } else {
+        showVerdict('ask', 'Modello non riconosciuto', "Non riusciamo a identificare questo processore automaticamente: contatta il supporto dr.veto per una verifica.");
+      }
+    } else { // mac
+      if (isAppleSilicon) {
+        showVerdict('ok', 'Compatibile', 'I Mac con chip Apple Silicon (M1 e successivi) sono compatibili con dr.veto.');
+      } else if (intelMatch) {
+        const fam = intelMatch[1];
+        if (fam === '3') {
+          showVerdict('ask', 'Da verificare con il supporto', "Per Core i3 su Mac serve una verifica diretta con l'assistenza dr.veto.");
+        } else if (fam === '5') {
+          const gen = intelGen(intelMatch[2]);
+          if (gen > 3) showVerdict('ok', 'Compatibile', 'Intel Core i5 successivo alla 3ª generazione è compatibile.');
+          else showVerdict('no', 'Non compatibile', 'Serve almeno un Core i5 successivo alla 3ª generazione.');
+        } else {
+          showVerdict('ok', 'Compatibile', `Intel Core i${fam} è sempre compatibile su Mac.`);
+        }
+      } else if (/\bi3\b/.test(q)) {
+        showVerdict('ask', 'Da verificare con il supporto', "Contatta l'assistenza dr.veto per una verifica.");
+      } else {
+        showVerdict('ask', 'Modello non riconosciuto', "Non riusciamo a identificare questo processore automaticamente: contatta il supporto dr.veto per una verifica.");
+      }
+    }
+  }
+
+  cpuInputEl.addEventListener('input', evaluateCpu);
+
+  howToFindBtn.addEventListener('click', () => {
+    howToFindBox.hidden = !howToFindBox.hidden;
+  });
 </script>
