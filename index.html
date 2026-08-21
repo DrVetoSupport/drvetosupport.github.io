@@ -124,6 +124,80 @@
     .sticky-contact { display: none; }
   }
 
+  .back-to-top {
+    position: fixed;
+    right: 20px;
+    bottom: 78px;
+    z-index: 42;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 1px solid var(--line);
+    background: var(--surface);
+    color: var(--ink-soft);
+    box-shadow: var(--shadow);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
+  .back-to-top:hover { color: var(--accent); border-color: var(--accent); }
+  .back-to-top svg { width: 18px; height: 18px; }
+  @media print { .back-to-top { display: none; } }
+
+  .help-popup {
+    position: fixed;
+    left: 20px;
+    bottom: 78px;
+    z-index: 45;
+    width: 260px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    box-shadow: var(--shadow);
+    padding: 18px 18px 16px;
+    animation: helpPopupIn 0.35s ease;
+  }
+  @keyframes helpPopupIn {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .help-popup-close {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 24px;
+    height: 24px;
+    border: none;
+    background: transparent;
+    color: var(--ink-soft);
+    cursor: pointer;
+    font-size: 15px;
+    line-height: 1;
+  }
+  .help-popup-close:hover { color: var(--ink); }
+  .help-popup-title {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 15px;
+    margin: 0 0 6px;
+    padding-right: 16px;
+  }
+  .help-popup-text {
+    font-size: 12.5px;
+    color: var(--ink-soft);
+    margin: 0 0 12px;
+    line-height: 1.5;
+  }
+  .help-popup .cta-btn {
+    width: 100%;
+    justify-content: center;
+  }
+  @media (max-width: 480px) {
+    .help-popup { left: 12px; right: 12px; width: auto; }
+  }
+  @media print { .help-popup { display: none; } }
+
   .brand-logo {
     height: 42px;
     width: auto;
@@ -1278,6 +1352,19 @@
     <p class="company">Alcyon Italia S.p.A. — Via Del Lavoro 110, 12062 Cherasco (CN) — P.IVA 02241700042</p>
   </footer>
 
+  <button type="button" class="back-to-top" id="backToTop" aria-label="Torna in cima" hidden>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M12 19V5M5 12l7-7 7 7"/>
+    </svg>
+  </button>
+
+  <div class="help-popup" id="helpPopup" hidden>
+    <button type="button" class="help-popup-close" id="helpPopupClose" aria-label="Chiudi">✕</button>
+    <p class="help-popup-title">Hai bisogno di aiuto?</p>
+    <p class="help-popup-text">Siamo qui per rispondere a qualsiasi domanda sulla configurazione.</p>
+    <a class="cta-btn primary wa-link" id="helpPopupWa" href="https://wa.me/393357354259" target="_blank" rel="noopener">💬 Contattaci su WhatsApp</a>
+  </div>
+
   <div class="sticky-contact">
     <span class="sticky-contact-label">Hai dubbi? Contattaci:</span>
     <a class="cta-btn primary" href="tel:800060952">📞 800 060 952</a>
@@ -1714,5 +1801,42 @@
     media.addEventListener('change', () => {
       if (!localStorage.getItem('drveto-theme')) updateIcon();
     });
+  })();
+
+  // ---- back to top ----
+  (function initBackToTop() {
+    const btn = document.getElementById('backToTop');
+    if (!btn) return;
+    function toggle() {
+      btn.hidden = window.scrollY < 400;
+    }
+    toggle();
+    window.addEventListener('scroll', toggle, { passive: true });
+    btn.addEventListener('click', () => {
+      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' });
+    });
+  })();
+
+  // ---- "need help?" nudge popup ----
+  (function initHelpPopup() {
+    const popup = document.getElementById('helpPopup');
+    const closeBtn = document.getElementById('helpPopupClose');
+    const waBtn = document.getElementById('helpPopupWa');
+    if (!popup) return;
+    const DISMISS_KEY = 'drveto-help-dismissed';
+    if (sessionStorage.getItem(DISMISS_KEY)) return;
+
+    const timer = setTimeout(() => {
+      popup.hidden = false;
+    }, 45000);
+
+    function dismiss() {
+      popup.hidden = true;
+      sessionStorage.setItem(DISMISS_KEY, '1');
+      clearTimeout(timer);
+    }
+    closeBtn.addEventListener('click', dismiss);
+    waBtn.addEventListener('click', dismiss);
   })();
 </script>
