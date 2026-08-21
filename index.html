@@ -1802,7 +1802,7 @@
         if (fam === '3' || fam === '5' || fam === '7') return { level: 'ok', title: 'Compatibile', detail: `AMD Ryzen ${fam} soddisfa i requisiti minimi di dr.veto.` };
         return { level: 'ask', title: 'Da verificare con il supporto', detail: "Per questo modello serve una verifica diretta con l'assistenza dr.veto." };
       }
-      return { level: 'ask', title: 'Modello non riconosciuto', detail: "Non riusciamo a identificare questo processore automaticamente: contatta il supporto dr.veto per una verifica." };
+      return { level: 'ask', unrecognized: true, title: 'Modello non riconosciuto', detail: "Non riusciamo a identificare questo processore automaticamente: contatta il supporto dr.veto per una verifica." };
     }
 
     // mac
@@ -1822,7 +1822,7 @@
     if (/\bi3\b/.test(q)) {
       return { level: 'ask', title: 'Da verificare con il supporto', detail: "Contatta l'assistenza dr.veto per una verifica." };
     }
-    return { level: 'ask', title: 'Modello non riconosciuto', detail: "Non riusciamo a identificare questo processore automaticamente: contatta il supporto dr.veto per una verifica." };
+    return { level: 'ask', unrecognized: true, title: 'Modello non riconosciuto', detail: "Non riusciamo a identificare questo processore automaticamente: contatta il supporto dr.veto per una verifica." };
   }
 
   function initCpuChecker(suffix) {
@@ -1847,7 +1847,7 @@
       resultEl.className = 'cpu-result ' + verdict.level;
       const icon = verdict.level === 'ok' ? '\u2713' : verdict.level === 'no' ? '\u2717' : '\u2709';
       resultEl.innerHTML = `<span class="verdict-icon">${icon}</span><div><strong>${verdict.title}</strong><p>${verdict.detail}</p></div>`;
-      if (nudgeEl) nudgeEl.hidden = verdict.level === 'ok';
+      if (nudgeEl) nudgeEl.hidden = verdict.level === 'ok' || !!verdict.unrecognized;
     }
 
     winBtn.addEventListener('click', () => {
