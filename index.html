@@ -907,6 +907,37 @@
   .cpu-result.no strong { color: var(--bad); }
   .cpu-result.ask { background: var(--warn-soft); }
   .cpu-result.ask strong { color: var(--warn); }
+
+  .vetsgo-nudge {
+    position: relative;
+    overflow: hidden;
+    background: var(--accent-soft);
+    border: 1px solid color-mix(in srgb, var(--accent) 30%, transparent);
+    border-radius: 12px;
+    padding: 14px 16px;
+    animation: cardIn 0.3s ease;
+  }
+  .vetsgo-nudge p {
+    position: relative;
+    z-index: 1;
+    margin: 0 0 10px;
+    font-size: 12.5px;
+    color: var(--ink);
+    line-height: 1.5;
+  }
+  .vetsgo-nudge .cta-btn {
+    position: relative;
+    z-index: 1;
+    font-size: 12.5px;
+    padding: 8px 14px;
+  }
+  .nudge-paw {
+    position: absolute;
+    color: var(--accent);
+    opacity: 0.15;
+  }
+  .nudge-paw.n1 { width: 36px; height: 36px; top: -10px; right: 6px; transform: rotate(15deg); }
+  .nudge-paw.n2 { width: 20px; height: 20px; bottom: -2px; right: 52px; transform: rotate(-12deg); }
   .link-btn {
     background: none;
     border: none;
@@ -1085,6 +1116,24 @@
           </div>
           <input type="text" id="cpuInput" class="cpu-input" placeholder="Modello CPU — es. i5-8500, Ryzen 5 3600, M1…" autocomplete="off">
           <div id="cpuResult" class="cpu-result" hidden></div>
+          <div class="vetsgo-nudge" id="vetsgoNudge" hidden>
+            <svg class="nudge-paw n1" viewBox="0 0 100 100" fill="currentColor">
+              <ellipse cx="50" cy="66" rx="24" ry="20"/>
+              <ellipse cx="24" cy="34" rx="10" ry="13" transform="rotate(-15 24 34)"/>
+              <ellipse cx="46" cy="22" rx="10" ry="13"/>
+              <ellipse cx="70" cy="24" rx="10" ry="13" transform="rotate(6 70 24)"/>
+              <ellipse cx="82" cy="40" rx="9" ry="12" transform="rotate(18 82 40)"/>
+            </svg>
+            <svg class="nudge-paw n2" viewBox="0 0 100 100" fill="currentColor">
+              <ellipse cx="50" cy="66" rx="24" ry="20"/>
+              <ellipse cx="24" cy="34" rx="10" ry="13" transform="rotate(-15 24 34)"/>
+              <ellipse cx="46" cy="22" rx="10" ry="13"/>
+              <ellipse cx="70" cy="24" rx="10" ry="13" transform="rotate(6 70 24)"/>
+              <ellipse cx="82" cy="40" rx="9" ry="12" transform="rotate(18 82 40)"/>
+            </svg>
+            <p>Il tuo PC non è supportato? Nessun problema: abbiamo anche il gestionale interamente in cloud, utilizzabile da qualsiasi dispositivo.</p>
+            <a class="cta-btn primary" href="https://gestionalevetsgo.it" target="_blank" rel="noopener">Scopri VetsGo Cloud →</a>
+          </div>
           <button type="button" id="howToFindBtn" class="link-btn">Non sai qual è la CPU del tuo PC?</button>
           <div class="notice" id="howToFindBox" hidden>
             <span>💡</span>
@@ -1741,16 +1790,22 @@
     const resultEl = document.getElementById('cpuResult' + suffix);
     const howBtn = document.getElementById('howToFindBtn' + suffix);
     const howBox = document.getElementById('howToFindBox' + suffix);
+    const nudgeEl = document.getElementById('vetsgoNudge' + suffix);
     if (!winBtn || !input) return;
     let os = 'win';
 
     function render() {
       const verdict = evaluateCpuVerdict(os, input.value);
-      if (!verdict) { resultEl.hidden = true; return; }
+      if (!verdict) {
+        resultEl.hidden = true;
+        if (nudgeEl) nudgeEl.hidden = true;
+        return;
+      }
       resultEl.hidden = false;
       resultEl.className = 'cpu-result ' + verdict.level;
       const icon = verdict.level === 'ok' ? '\u2713' : verdict.level === 'no' ? '\u2717' : '\u2709';
       resultEl.innerHTML = `<span class="verdict-icon">${icon}</span><div><strong>${verdict.title}</strong><p>${verdict.detail}</p></div>`;
+      if (nudgeEl) nudgeEl.hidden = verdict.level === 'ok';
     }
 
     winBtn.addEventListener('click', () => {
