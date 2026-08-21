@@ -24,6 +24,9 @@
     --bad-soft: #FBE7E4;
     --chip-bg: #F2EBDC;
     --shadow: 0 1px 2px rgba(26,18,0,0.06), 0 8px 24px -12px rgba(26,18,0,0.18);
+    --blue: #2A5FE0;
+    --blue-ink: #FFFFFF;
+    --blue-soft: #E8EEFC;
 
     --font-display: "Source Serif 4", Georgia, "Times New Roman", serif;
     --font-body: "IBM Plex Sans", -apple-system, "Segoe UI", sans-serif;
@@ -49,6 +52,9 @@
       --bad-soft: #3A1D1A;
       --chip-bg: #241D12;
       --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px -12px rgba(0,0,0,0.5);
+      --blue: #5B8DFF;
+      --blue-ink: #0B1226;
+      --blue-soft: #17223F;
     }
   }
   :root[data-theme="dark"] {
@@ -69,6 +75,9 @@
     --bad-soft: #3A1D1A;
     --chip-bg: #241D12;
     --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px -12px rgba(0,0,0,0.5);
+    --blue: #5B8DFF;
+    --blue-ink: #0B1226;
+    --blue-soft: #17223F;
   }
 
   * { box-sizing: border-box; }
@@ -911,33 +920,63 @@
   .vetsgo-nudge {
     position: relative;
     overflow: hidden;
-    background: var(--accent-soft);
-    border: 1px solid color-mix(in srgb, var(--accent) 30%, transparent);
+    background: var(--blue-soft);
+    border: 1.5px solid color-mix(in srgb, var(--blue) 45%, transparent);
     border-radius: 12px;
-    padding: 14px 16px;
+    padding: 16px 18px;
+    box-shadow: 0 4px 18px -8px color-mix(in srgb, var(--blue) 45%, transparent);
     animation: cardIn 0.3s ease;
+  }
+  .vetsgo-nudge .nudge-eyebrow {
+    position: relative;
+    z-index: 1;
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--blue);
+    margin-bottom: 5px;
   }
   .vetsgo-nudge p {
     position: relative;
     z-index: 1;
-    margin: 0 0 10px;
-    font-size: 12.5px;
+    margin: 0 0 12px;
+    font-size: 13px;
+    font-weight: 500;
     color: var(--ink);
     line-height: 1.5;
   }
   .vetsgo-nudge .cta-btn {
     position: relative;
     z-index: 1;
-    font-size: 12.5px;
-    padding: 8px 14px;
+    font-size: 13px;
+    font-weight: 700;
+    padding: 9px 16px;
+    background: var(--blue);
+    color: var(--blue-ink);
+    border-color: transparent;
+    box-shadow: 0 3px 12px -3px color-mix(in srgb, var(--blue) 65%, transparent);
+    animation: nudgePulse 2.2s ease-in-out infinite;
+  }
+  .vetsgo-nudge .cta-btn:hover {
+    filter: brightness(1.08);
+  }
+  @keyframes nudgePulse {
+    0%, 100% { box-shadow: 0 3px 12px -3px color-mix(in srgb, var(--blue) 55%, transparent); }
+    50% { box-shadow: 0 3px 18px -1px color-mix(in srgb, var(--blue) 80%, transparent); }
   }
   .nudge-paw {
     position: absolute;
-    color: var(--accent);
+    color: var(--blue);
     opacity: 0.15;
   }
   .nudge-paw.n1 { width: 36px; height: 36px; top: -10px; right: 6px; transform: rotate(15deg); }
   .nudge-paw.n2 { width: 20px; height: 20px; bottom: -2px; right: 52px; transform: rotate(-12deg); }
+  @media (prefers-reduced-motion: reduce) {
+    .vetsgo-nudge .cta-btn { animation: none; }
+  }
   .link-btn {
     background: none;
     border: none;
@@ -1131,8 +1170,9 @@
               <ellipse cx="70" cy="24" rx="10" ry="13" transform="rotate(6 70 24)"/>
               <ellipse cx="82" cy="40" rx="9" ry="12" transform="rotate(18 82 40)"/>
             </svg>
-            <p>Il tuo PC non è supportato? Nessun problema: abbiamo anche il gestionale interamente in cloud, utilizzabile da qualsiasi dispositivo.</p>
-            <a class="cta-btn primary" href="https://gestionalevetsgo.it" target="_blank" rel="noopener">Scopri VetsGo Cloud →</a>
+            <span class="nudge-eyebrow">☁ Soluzione alternativa</span>
+            <p>Il tuo PC non è supportato? Nessun problema: scegli il gestionale interamente in cloud, utilizzabile da qualsiasi dispositivo.</p>
+            <a class="cta-btn" href="https://gestionalevetsgo.it" target="_blank" rel="noopener">Scopri VetsGo Cloud →</a>
           </div>
           <button type="button" id="howToFindBtn" class="link-btn">Non sai qual è la CPU del tuo PC?</button>
           <div class="notice" id="howToFindBox" hidden>
@@ -1721,13 +1761,15 @@
     const q = raw.trim().toLowerCase();
     if (!q) return null;
 
-    const intelMatch = q.match(/i\s?([3579])[\s-]?(\d{3,5})/);
+    const intelMatch = q.match(/i\s?([3579])[\s-]?(\d{1,5})/);
     const isUltra = /ultra/.test(q);
     const ryzenMatch = q.match(/ryzen\s*([3579])/);
     const isAppleSilicon = /\bm[1-4]\b/.test(q) || /apple silicon/.test(q);
 
     function intelGen(numStr) {
       const num = parseInt(numStr, 10);
+      if (numStr.length === 1) return num;
+      if (numStr.length === 2 && num >= 10 && num <= 20) return num;
       return num < 1000 ? 1 : Math.floor(num / 1000);
     }
 
