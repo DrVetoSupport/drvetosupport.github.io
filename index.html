@@ -90,7 +90,38 @@
   .wrap {
     max-width: 1120px;
     margin: 0 auto;
-    padding: 40px 24px 96px;
+    padding: 40px 24px 116px;
+  }
+
+  .sticky-contact {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 40;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 10px 16px;
+    background: var(--surface);
+    border-top: 1px solid var(--line);
+    box-shadow: 0 -6px 20px -8px rgba(0,0,0,0.25);
+  }
+  .sticky-contact-label {
+    font-size: 12.5px;
+    color: var(--ink-soft);
+    white-space: nowrap;
+  }
+  .sticky-contact .cta-btn {
+    padding: 8px 14px;
+    font-size: 13px;
+  }
+  @media (max-width: 480px) {
+    .sticky-contact-label { display: none; }
+  }
+  @media print {
+    .sticky-contact { display: none; }
   }
 
   .brand-logo {
@@ -1155,7 +1186,7 @@
     <div>
       <div class="cta-actions">
         <a class="cta-btn primary" href="tel:800060952">📞 Numero verde 800 060 952</a>
-        <a class="cta-btn" id="waLink" href="https://wa.me/393357354259" target="_blank" rel="noopener">💬 WhatsApp 335 735 4259</a>
+        <a class="cta-btn wa-link" href="https://wa.me/393357354259" target="_blank" rel="noopener">💬 WhatsApp 335 735 4259</a>
       </div>
       <p class="cta-note">Chiamata gratuita da rete fissa e mobile.</p>
     </div>
@@ -1170,6 +1201,12 @@
     <p>Dati aggiornati ad Agosto 2026.</p>
     <p class="company">Alcyon Italia S.p.A. — Via Del Lavoro 110, 12062 Cherasco (CN) — P.IVA 02241700042</p>
   </footer>
+
+  <div class="sticky-contact">
+    <span class="sticky-contact-label">Hai dubbi? Contattaci:</span>
+    <a class="cta-btn primary" href="tel:800060952">📞 800 060 952</a>
+    <a class="cta-btn wa-link" href="https://wa.me/393357354259" target="_blank" rel="noopener">💬 WhatsApp</a>
+  </div>
 
 </div>
 
@@ -1343,7 +1380,7 @@
   const tabAlcyon = document.getElementById('tabAlcyon');
   const panelDrVeto = document.getElementById('panelDrVeto');
   const panelAlcyon = document.getElementById('panelAlcyon');
-  const waLinkEl = document.getElementById('waLink');
+  const waLinkEls = document.querySelectorAll('.wa-link');
 
   function buildWhatsAppMessage() {
     if (!panelAlcyon.hidden) {
@@ -1354,7 +1391,8 @@
   }
 
   function updateWaLink() {
-    if (waLinkEl) waLinkEl.href = 'https://wa.me/393357354259?text=' + encodeURIComponent(buildWhatsAppMessage());
+    const href = 'https://wa.me/393357354259?text=' + encodeURIComponent(buildWhatsAppMessage());
+    waLinkEls.forEach(el => { el.href = href; });
   }
 
   function buildShareUrl() {
