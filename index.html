@@ -243,10 +243,31 @@
 
   .tabs {
     display: flex;
+    align-items: center;
     gap: 28px;
     border-bottom: 1px solid var(--line);
     margin-bottom: 32px;
   }
+  .theme-toggle {
+    margin-left: auto;
+    margin-bottom: 8px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    border: 1px solid var(--line);
+    background: var(--surface-2);
+    color: var(--ink-soft);
+    cursor: pointer;
+  }
+  .theme-toggle:hover { color: var(--accent); border-color: var(--accent); }
+  .theme-toggle svg { width: 16px; height: 16px; }
+  .theme-toggle .icon-moon { display: none; }
+  .theme-toggle[data-active="dark"] .icon-sun { display: none; }
+  .theme-toggle[data-active="dark"] .icon-moon { display: block; }
+  @media print { .theme-toggle { display: none; } }
   .tab {
     font-family: var(--font-body);
     font-size: 14.5px;
@@ -936,6 +957,15 @@
   <div class="tabs" role="tablist" aria-label="Prodotto">
     <button type="button" class="tab" id="tabDrVeto" role="tab" aria-selected="true" aria-controls="panelDrVeto">dr.veto</button>
     <button type="button" class="tab" id="tabAlcyon" role="tab" aria-selected="false" aria-controls="panelAlcyon">Alcyon Hub</button>
+    <button type="button" class="theme-toggle" id="themeToggle" aria-label="Cambia tema chiaro/scuro" title="Cambia tema chiaro/scuro">
+      <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+        <circle cx="12" cy="12" r="4"/>
+        <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
+      </svg>
+      <svg class="icon-moon" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M20.5 14.5a8.5 8.5 0 1 1-9-13 7 7 0 0 0 9 13z"/>
+      </svg>
+    </button>
   </div>
 
   <section id="panelDrVeto" role="tabpanel" aria-labelledby="tabDrVeto">
@@ -1654,4 +1684,35 @@
 
   initCpuChecker('');
   initCpuChecker('2');
+
+  // ---- theme toggle ----
+  (function initThemeToggle() {
+    const root = document.documentElement;
+    const btn = document.getElementById('themeToggle');
+    const stored = localStorage.getItem('drveto-theme');
+    if (stored === 'light' || stored === 'dark') {
+      root.setAttribute('data-theme', stored);
+    }
+    const media = window.matchMedia('(prefers-color-scheme: dark)');
+
+    function currentEffectiveTheme() {
+      const attr = root.getAttribute('data-theme');
+      if (attr) return attr;
+      return media.matches ? 'dark' : 'light';
+    }
+    function updateIcon() {
+      btn.setAttribute('data-active', currentEffectiveTheme());
+    }
+    updateIcon();
+
+    btn.addEventListener('click', () => {
+      const next = currentEffectiveTheme() === 'dark' ? 'light' : 'dark';
+      root.setAttribute('data-theme', next);
+      localStorage.setItem('drveto-theme', next);
+      updateIcon();
+    });
+    media.addEventListener('change', () => {
+      if (!localStorage.getItem('drveto-theme')) updateIcon();
+    });
+  })();
 </script>
