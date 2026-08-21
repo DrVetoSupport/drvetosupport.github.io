@@ -1,5 +1,5 @@
 <meta charset="UTF-8">
-<title>Configuratore Dr.Veto</title>
+<title>Requisiti Dr.Veto & Alcyon Hub</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Ctext y=%22.9em%22 font-size=%2290%22%3E%F0%9F%90%BE%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -139,7 +139,6 @@
     align-items: center;
     justify-content: space-between;
     gap: 24px;
-    max-width: 760px;
     margin-bottom: 40px;
   }
   .header-text {
@@ -147,6 +146,29 @@
     flex-direction: column;
     align-items: flex-start;
     gap: 10px;
+    max-width: 480px;
+    flex-shrink: 0;
+  }
+  .header-trail {
+    flex: 1;
+    position: relative;
+    height: 70px;
+    min-width: 60px;
+  }
+  .mini-paw {
+    position: absolute;
+    color: var(--accent);
+    animation: miniPawFloat 3.4s ease-in-out infinite;
+  }
+  .mini-paw.p1 { width: 16px; height: 16px; top: 6px; left: 10%; opacity: 0.2; animation-delay: 0s; }
+  .mini-paw.p2 { width: 24px; height: 24px; top: 34px; left: 42%; opacity: 0.28; animation-delay: 0.7s; }
+  .mini-paw.p3 { width: 14px; height: 14px; top: 12px; left: 76%; opacity: 0.16; animation-delay: 1.4s; }
+  @keyframes miniPawFloat {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-7px); }
+  }
+  @media (max-width: 900px) {
+    .header-trail { display: none; }
   }
   .header-art {
     flex-shrink: 0;
@@ -193,6 +215,7 @@
   @media print {
     .brand-logo { height: 32px; }
     .header-art { display: none; }
+    .header-trail { display: none; }
   }
   .eyebrow {
     font-family: var(--font-mono);
@@ -868,6 +891,29 @@
       <span class="eyebrow">Dr.Veto · Requisiti di sistema</span>
       <h1>Requisiti Dr.Veto per la tua struttura</h1>
       <p class="lede">Indica quante postazioni hai in clinica: calcoliamo subito la configurazione consigliata per i PC client e per il server, proporzionata al numero di postazioni.</p>
+    </div>
+    <div class="header-trail" aria-hidden="true">
+      <svg class="mini-paw p1" viewBox="0 0 100 100" fill="currentColor">
+        <ellipse cx="50" cy="66" rx="24" ry="20"/>
+        <ellipse cx="24" cy="34" rx="10" ry="13" transform="rotate(-15 24 34)"/>
+        <ellipse cx="46" cy="22" rx="10" ry="13"/>
+        <ellipse cx="70" cy="24" rx="10" ry="13" transform="rotate(6 70 24)"/>
+        <ellipse cx="82" cy="40" rx="9" ry="12" transform="rotate(18 82 40)"/>
+      </svg>
+      <svg class="mini-paw p2" viewBox="0 0 100 100" fill="currentColor">
+        <ellipse cx="50" cy="66" rx="24" ry="20"/>
+        <ellipse cx="24" cy="34" rx="10" ry="13" transform="rotate(-15 24 34)"/>
+        <ellipse cx="46" cy="22" rx="10" ry="13"/>
+        <ellipse cx="70" cy="24" rx="10" ry="13" transform="rotate(6 70 24)"/>
+        <ellipse cx="82" cy="40" rx="9" ry="12" transform="rotate(18 82 40)"/>
+      </svg>
+      <svg class="mini-paw p3" viewBox="0 0 100 100" fill="currentColor">
+        <ellipse cx="50" cy="66" rx="24" ry="20"/>
+        <ellipse cx="24" cy="34" rx="10" ry="13" transform="rotate(-15 24 34)"/>
+        <ellipse cx="46" cy="22" rx="10" ry="13"/>
+        <ellipse cx="70" cy="24" rx="10" ry="13" transform="rotate(6 70 24)"/>
+        <ellipse cx="82" cy="40" rx="9" ry="12" transform="rotate(18 82 40)"/>
+      </svg>
     </div>
     <div class="header-art" aria-hidden="true">
       <svg class="paw-trail" viewBox="0 0 100 100" fill="currentColor">
